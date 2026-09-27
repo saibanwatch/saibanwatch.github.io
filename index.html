@@ -428,6 +428,23 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .ad-frame span{font-size:12px;color:#777}
 .ad-actions{display:flex;justify-content:flex-end}
 .ad-disclosure{font-size:11px;color:#888;margin-top:6px}
+
+.tutorial-modal{max-width:560px}
+.tutorial-kicker{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent);margin-bottom:3px}
+.tutorial-progress{display:flex;gap:6px;margin:14px 0 16px}
+.tutorial-dot{height:5px;flex:1;border-radius:999px;background:#e5e5e5}
+.tutorial-dot.active{background:var(--accent)}
+.tutorial-step{display:none}
+.tutorial-step.active{display:block}
+.tutorial-step h3{font-size:19px;line-height:1.45;margin:0 0 7px}
+.tutorial-step p{margin:0;color:#666;font-size:13px}
+.tutorial-example{margin:13px 0 0;padding:11px 12px;border:1px solid #e2e2e2;border-radius:6px;background:#fafafa;font-size:12px;color:#555}
+.tutorial-example b{display:block;color:#333;margin-bottom:3px}
+.tutorial-actions{display:flex;align-items:center;gap:7px;margin-top:18px;padding-top:13px;border-top:1px solid #eee}
+.tutorial-actions .tutorial-skip{margin-right:auto;border:0;background:none;color:#888;padding:6px}
+.tutorial-actions .primary{min-width:84px}
+.tutorial-note{margin:8px 0 0;font-size:11px;color:#888}
+.tutorial-replay{margin-top:8px}
 @media(max-width:820px){
   .layout{grid-template-columns:1fr}
   aside{display:grid;grid-template-columns:1fr 1fr}
@@ -452,7 +469,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 </style>
   <script defer src="/analytics.js"></script>
 </head>
-<body data-build="2026-09-21-party-people-1">
+<body data-build="2026-09-27-onboarding-1">
   <header><div class="nav">
     <a class="brand" href="#">裁判ウォッチ</a>
     <form class="search" id="caseSearchForm" role="search" autocomplete="off" style="display:flex;gap:6px" onsubmit="return false">
@@ -473,6 +490,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <p style="margin:10px 0 0;font-size:12px"><a href="latest.html">新着裁判</a> · <a href="all-cases.html">裁判例・判決の全件一覧</a> · <a href="criminal.html">刑事裁判</a> · <a href="civil.html">民事裁判</a> · <a href="administrative.html">行政裁判</a> · <a href="topics.html">事件テーマ別</a> · <a href="people.html">裁判関係者一覧</a> · <a href="guides.html">法律用語・裁判手続</a></p>
         <p style="margin:6px 0 0;font-size:12px">テーマから探す：<a href="topics/sexual-offenses.html">性犯罪</a> · <a href="topics/murder.html">殺人</a> · <a href="topics/fraud.html">詐欺</a> · <a href="topics/traffic.html">交通事故</a> · <a href="topics/labor.html">労働</a> · <a href="topics/medical.html">医療</a> · <a href="topics/administrative-disputes.html">行政処分</a> · <a href="topics/suspended-sentence.html">執行猶予</a></p>
         <p style="margin:6px 0 0;font-size:12px"><a href="courts.html">裁判所別に探す</a> · <a href="years.html">年別に探す</a></p>
+        <button class="tiny tutorial-replay" id="tutorialReplayBtn" type="button">初めての方へ：使い方を見る</button>
 </div>
 
       <div class="filterbar">
@@ -670,6 +688,36 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
     <div class="ad-disclosure">広告表示後も、元の操作はそのまま続行されます。</div>
   </div></dialog>
 
+  <dialog id="tutorialDialog"><div class="modal tutorial-modal">
+    <div class="modal-head">
+      <div><div class="tutorial-kicker">はじめての裁判ウォッチ</div><h2>30秒で使い方</h2></div>
+      <button class="close" id="closeTutorial" type="button" aria-label="チュートリアルを閉じる">×</button>
+    </div>
+    <div class="tutorial-progress" aria-hidden="true"><span class="tutorial-dot active"></span><span class="tutorial-dot"></span><span class="tutorial-dot"></span></div>
+    <section class="tutorial-step active" data-tutorial-step="0">
+      <h3>① 気になる裁判を開く</h3>
+      <p>事件一覧から、概要・当事者の主張・裁判所の判断・求刑や判決をまとめて確認できます。</p>
+      <div class="tutorial-example"><b>まずは読むだけでもOK</b>事件名や人物名、裁判所、タグから検索できます。</div>
+    </section>
+    <section class="tutorial-step" data-tutorial-step="1">
+      <h3>② あなたの感覚を投票する</h3>
+      <p>求刑・判決が「重い・妥当・軽い」のどれに近いか、裁判関係者をどう評価するかを投票できます。</p>
+      <div class="tutorial-example"><b>みんなの意見と比べられます</b>投票はアカウント登録後に利用できます。</div>
+    </section>
+    <section class="tutorial-step" data-tutorial-step="2">
+      <h3>③ 事件について参加する</h3>
+      <p>コメント投稿、タグ付け、訂正依頼などで、裁判ウォッチの情報や議論に参加できます。</p>
+      <div class="tutorial-example"><b>アカウントを作るとできること</b>投票・投稿・タグ付け・訂正依頼など。表示名はあとから変更できます。</div>
+    </section>
+    <div class="tutorial-actions">
+      <button class="tutorial-skip" id="tutorialSkip" type="button">スキップ</button>
+      <button class="tiny" id="tutorialBack" type="button" style="display:none">戻る</button>
+      <button class="primary" id="tutorialNext" type="button">次へ</button>
+      <button class="primary" id="tutorialSignup" type="button" style="display:none">アカウントを作る</button>
+    </div>
+    <p class="tutorial-note">この案内は初回訪問時だけ自動表示します。「初めての方へ」からいつでも見直せます。</p>
+  </div></dialog>
+
   <dialog id="authDialog"><div class="modal">
     <div class="modal-head"><div><div class="meta">ACCOUNT</div><h2>アカウント</h2></div><button class="close" id="closeAuth">×</button></div>
     <div class="authswitch"><button id="loginTab" class="active">ログイン</button><button id="signupTab">新規登録</button></div>
@@ -739,13 +787,55 @@ window.COURTWATCH_ADS?.init(sb);
 
     let user=null, currentCase=null, currentPerson=null, activeThread="case", casesCache=[], peopleCache=[], authMode="login", currentPage=1, currentQuery="", currentFilter="all"; const pageSize=10;
     let tagCaseMatchIds=new Set(),tagPersonMatchIds=new Set(),tagMentionMatchIds=new Set();
-    const caseDialog=document.getElementById("caseDialog"), personDialog=document.getElementById("personDialog"), authDialog=document.getElementById("authDialog"), requestDialog=document.getElementById("requestDialog");
+    const caseDialog=document.getElementById("caseDialog"), personDialog=document.getElementById("personDialog"), authDialog=document.getElementById("authDialog"), requestDialog=document.getElementById("requestDialog"), tutorialDialog=document.getElementById("tutorialDialog");
+    let tutorialStep=0; const ONBOARDING_KEY="courtwatch_onboarding_v1";
 
     const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
     const authorHtml=p=>p.author_public_id?'<a href="user.html?id='+encodeURIComponent(p.author_public_id)+'">'+esc(p.display_name)+'</a>':esc(p.display_name);
     const fmt=d=>d?new Date(d+"T00:00:00").toLocaleDateString("ja-JP"):"";
     const claimPendingText=c=>c?.raw_metadata?.fulltext_pdf_url?"判決全文を確認し、要約を編集中です。":(/courts\.go\.jp\/hanrei\//.test(c?.source_url||"")?"判決全文を取得・確認中です。":"要約を作成できる原資料を確認中です。");
     const needLogin=()=>{authStatus("投稿・投票・通報にはログインが必要です。");authDialog.showModal();};
+
+    function tutorialSeen(){
+      try{return localStorage.getItem(ONBOARDING_KEY)==="seen"}catch{return false}
+    }
+    function markTutorialSeen(){
+      try{localStorage.setItem(ONBOARDING_KEY,"seen")}catch{}
+    }
+    function renderTutorial(){
+      document.querySelectorAll("[data-tutorial-step]").forEach((el,i)=>el.classList.toggle("active",i===tutorialStep));
+      document.querySelectorAll(".tutorial-dot").forEach((el,i)=>el.classList.toggle("active",i<=tutorialStep));
+      document.getElementById("tutorialBack").style.display=tutorialStep>0?"inline-block":"none";
+      document.getElementById("tutorialNext").style.display=tutorialStep<2?"inline-block":"none";
+      const signup=document.getElementById("tutorialSignup");
+      signup.style.display=tutorialStep===2?"inline-block":"none";
+      signup.textContent=user?"事件を見て投票する":"アカウントを作る";
+    }
+    function openTutorial(force=false){
+      if(!force&&tutorialSeen())return;
+      if(!force&&document.querySelector("dialog[open]"))return;
+      tutorialStep=0;
+      renderTutorial();
+      if(!tutorialDialog.open)tutorialDialog.showModal();
+    }
+    function closeTutorial(markSeen=true){
+      if(markSeen)markTutorialSeen();
+      if(tutorialDialog.open)tutorialDialog.close();
+    }
+    function completeTutorial(){
+      markTutorialSeen();
+      if(tutorialDialog.open)tutorialDialog.close();
+      if(!user){
+        setAuthMode("signup");
+        authDialog.showModal();
+        return;
+      }
+      document.getElementById("cases")?.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    function maybeOpenTutorial(){
+      if(tutorialSeen())return;
+      setTimeout(()=>openTutorial(false),450);
+    }
 
     function updateAuthButton(){
       document.getElementById("authButton").textContent=user?"ログアウト":"ログイン";
@@ -1350,12 +1440,19 @@ window.COURTWATCH_ADS?.init(sb);
     document.getElementById("submitFeatureRequest").onclick=submitFeatureRequest;
     document.getElementById("closeRequest").onclick=()=>requestDialog.close();
     document.getElementById("closeAuth").onclick=()=>authDialog.close();document.getElementById("closeCase").onclick=()=>closeCaseOverlay();document.getElementById("closePerson").onclick=()=>personDialog.close();
+    document.getElementById("tutorialReplayBtn").onclick=()=>openTutorial(true);
+    document.getElementById("tutorialNext").onclick=()=>{if(tutorialStep<2){tutorialStep++;renderTutorial();}};
+    document.getElementById("tutorialBack").onclick=()=>{if(tutorialStep>0){tutorialStep--;renderTutorial();}};
+    document.getElementById("tutorialSkip").onclick=()=>closeTutorial(true);
+    document.getElementById("closeTutorial").onclick=()=>closeTutorial(true);
+    document.getElementById("tutorialSignup").onclick=completeTutorial;
     document.getElementById("caseCorrectionBtn").onclick=()=>{if(currentCase)submitCorrection("case",currentCase.id)};
     document.getElementById("personCorrectionBtn").onclick=()=>{if(currentPerson)submitCorrection("person",currentPerson.id)};
     document.querySelectorAll("#modalSentenceBox .opinion-btn").forEach(b=>b.onclick=()=>voteSentence(b.dataset.target,b.dataset.choice));
     caseDialog.addEventListener("click",e=>{if(e.target===caseDialog)closeCaseOverlay()});
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&caseDialog.classList.contains("open"))closeCaseOverlay()});
     personDialog.addEventListener("click",e=>{if(e.target===personDialog)personDialog.close()});authDialog.addEventListener("click",e=>{if(e.target===authDialog)authDialog.close()});requestDialog.addEventListener("click",e=>{if(e.target===requestDialog)requestDialog.close()});
+    tutorialDialog.addEventListener("click",e=>{if(e.target===tutorialDialog)closeTutorial(true)});
     const searchInput=document.getElementById("searchInput");
     const enableSearchInput=()=>{searchInput.readOnly=false;};
     searchInput.addEventListener("pointerdown",enableSearchInput,{once:true});
@@ -1425,6 +1522,7 @@ window.COURTWATCH_ADS?.init(sb);
         await openPersonInternal(deepPersonId);
         history.replaceState(null,"",location.pathname+location.hash);
       }
+      maybeOpenTutorial();
     })();
   </script>
 </body>
