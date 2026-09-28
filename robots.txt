@@ -4,5 +4,9 @@ Disallow: /admin.html
 Disallow: /reset-password.html
 Sitemap: https://saibanwatch.github.io/sitemap.xml
 Sitemap: https://saibanwatch.github.io/sitemap.txt
-Sitemap: https://saibanwatch.github.io/sitemaps/static.xml
+Sitemap: https://saibanwatch.github.io/sitemaps/cases.xml
 Sitemap: https://saibanwatch.github.io/sitemaps/people.xml
+Sitemap: https://saibanwatch.github.io/sitemaps/topics.xml
+Sitemap: https://saibanwatch.github.io/sitemaps/courts.xml
+Sitemap: https://saibanwatch.github.io/sitemaps/years.xml
+Sitemap: https://saibanwatch.github.io/sitemaps/static.xml
