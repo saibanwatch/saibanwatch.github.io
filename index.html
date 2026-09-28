@@ -927,9 +927,9 @@ window.COURTWATCH_ADS?.init(sb);
             ${personAvatar(p)}
             <div class="person-info">
               <div class="meta"><span>${esc(roleLabel(p.role))}</span><span>確認済み</span></div>
-              <h3>${esc(p.display_name)}</h3>
+              <h3><a href="people/${encodeURIComponent(p.id)}.html">${esc(p.display_name)}</a></h3>
               <p>${esc(p.organization||"所属情報未掲載")}</p>
-              <div class="card-foot"><span></span><a class="discuss" href="person.html?id=${encodeURIComponent(p.id)}">人物ページ・投稿</a></div>
+              <div class="card-foot"><span></span><span><a class="discuss" href="people/${encodeURIComponent(p.id)}.html">人物詳細</a> <a class="tiny" href="person.html?id=${encodeURIComponent(p.id)}">投票・投稿</a></span></div>
             </div>
           </article>`;
         }
@@ -1015,10 +1015,10 @@ window.COURTWATCH_ADS?.init(sb);
       document.getElementById("caseList").innerHTML=pageRows.length?pageRows.map(c=>`
         <article class="case-card" data-case-id="${c.id}">
           <div class="meta"><span class="badge">${esc(c.category||"未分類")}</span><span class="badge ${c.status==="審理中"?"live":""}">${esc(c.status||"")}</span><span>${esc(c.court||"")}</span><span>${esc(fmt(c.event_date))}${c.raw_metadata?.time_jst?" "+esc(c.raw_metadata.time_jst):""}</span>${c.raw_metadata?.case_number?'<span>'+esc(c.raw_metadata.case_number)+'</span>':""}</div>
-          <h3>${esc(c.title)}</h3>
+          <h3><a href="cases/${encodeURIComponent(c.slug)}.html">${esc(c.title)}</a></h3>
           <p class="summary">${esc(c.summary||"")}</p>
           ${listClaimHtml(c)}
-          <div class="card-foot"><span class="notice">${c.updated_at?"更新 "+new Date(c.updated_at).toLocaleDateString("ja-JP"):""}</span><button class="discuss" type="button" onclick="openCase('${c.id}')">事件ページ・投稿</button></div>
+          <div class="card-foot"><span class="notice">${c.updated_at?"更新 "+new Date(c.updated_at).toLocaleDateString("ja-JP"):""}</span><span><a class="discuss" href="cases/${encodeURIComponent(c.slug)}.html">事件詳細</a> <button class="tiny" type="button" onclick="openCase('${c.id}')">投票・投稿</button></span></div>
         </article>`).join(""):'<div class="empty">該当する事件はありません。</div>';
     }
 
