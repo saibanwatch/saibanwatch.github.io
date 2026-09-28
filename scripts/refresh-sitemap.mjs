@@ -302,6 +302,20 @@ fs.writeFileSync("sentencing.html",archive("sentencing.html","求刑と判決の
 const byUpdated=(a,b)=>String(b.updated_at||b.event_date||"").localeCompare(String(a.updated_at||a.event_date||""));
 fs.writeFileSync("latest.html",archive("latest.html","新着・更新された裁判例","最近追加・更新された裁判例を新しい順に確認できます。事件概要、裁判所、判決・求刑、関係者ページへ移動できます。",[...cases].sort(byUpdated).slice(0,150)));
 
+function refreshHomepageLatestCases(){
+  const path="index.html";
+  if(!fs.existsSync(path))return;
+  let page=fs.readFileSync(path,"utf8");
+  const start="<!-- SEO_LATEST_CASES_START -->", end="<!-- SEO_LATEST_CASES_END -->";
+  const si=page.indexOf(start), ei=page.indexOf(end);
+  if(si<0||ei<0||ei<si)return;
+  const rows=[...cases].sort(byUpdated).slice(0,8);
+  const links=rows.map(q=>'<li><a href="cases/'+encodeURIComponent(q.slug)+'.html">'+h(q.title)+'</a>'+(q.event_date?' <span class="notice">'+h(jpdate(q.event_date))+'</span>':'')+'</li>').join("");
+  page=page.slice(0,si+start.length)+links+page.slice(ei);
+  fs.writeFileSync(path,page);
+}
+refreshHomepageLatestCases();
+
 const allCasesSorted=[...cases].sort(byDate);
 const allCasesPerPage=200;
 const allCasesTotalPages=Math.max(1,Math.ceil(allCasesSorted.length/allCasesPerPage));
