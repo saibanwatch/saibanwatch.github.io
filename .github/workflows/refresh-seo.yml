@@ -30,7 +30,7 @@ jobs:
         id: changes
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain -- cases people topics courts years case-archive people.html topics.html courts.html years.html all-cases.html latest.html criminal.html civil.html administrative.html acquittals.html sentencing.html feed.xml sitemap.xml sitemap.txt sitemaps)" ]; then
+          if [ -z "$(git status --porcelain -- index.html cases people topics courts years case-archive people.html topics.html courts.html years.html all-cases.html latest.html criminal.html civil.html administrative.html acquittals.html sentencing.html feed.xml sitemap.xml sitemap.txt sitemaps)" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -44,7 +44,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add cases people topics courts years case-archive people.html topics.html courts.html years.html all-cases.html latest.html criminal.html civil.html administrative.html acquittals.html sentencing.html feed.xml sitemap.xml sitemap.txt sitemaps
+          git add index.html cases people topics courts years case-archive people.html topics.html courts.html years.html all-cases.html latest.html criminal.html civil.html administrative.html acquittals.html sentencing.html feed.xml sitemap.xml sitemap.txt sitemaps
           git commit -m "Refresh static search pages"
           git fetch origin main
           git rebase origin/main
