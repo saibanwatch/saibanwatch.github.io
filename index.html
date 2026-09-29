@@ -445,6 +445,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .tutorial-actions .primary{min-width:84px}
 .tutorial-note{margin:8px 0 0;font-size:11px;color:#888}
 .tutorial-replay{margin-top:8px}
+.signup-promo{margin:12px 0;padding:11px 12px;border:1px solid #f0c7ba;border-radius:6px;background:var(--accent-soft);font-size:12px;line-height:1.65;color:#555}
+.signup-promo strong{display:block;color:var(--accent-dark);font-size:13px;margin-bottom:2px}
 @media(max-width:820px){
   .layout{grid-template-columns:1fr}
   aside{display:grid;grid-template-columns:1fr 1fr}
@@ -469,7 +471,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 </style>
   <script defer src="/analytics.js"></script>
 </head>
-<body data-build="2026-09-27-onboarding-1">
+<body data-build="2026-09-29-signup-promo-1">
   <header><div class="nav">
     <a class="brand" href="#">裁判ウォッチ</a>
     <form class="search" id="caseSearchForm" role="search" autocomplete="off" style="display:flex;gap:6px" onsubmit="return false">
@@ -719,6 +721,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       <h3>③ 事件について参加する</h3>
       <p>コメント投稿、タグ付け、訂正依頼などで、裁判ウォッチの情報や議論に参加できます。</p>
       <div class="tutorial-example"><b>アカウントを作るとできること</b>投票・投稿・タグ付け・訂正依頼など。表示名はあとから変更できます。</div>
+      <div class="signup-promo"><strong>初回投稿キャンペーン</strong>アカウント登録後、最初の投稿をした方の中から抽選で、登録メールアドレス宛にAmazonギフトカード1,000円分をプレゼントします。</div>
     </section>
     <div class="tutorial-actions">
       <button class="tutorial-skip" id="tutorialSkip" type="button">スキップ</button>
@@ -733,7 +736,10 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
     <div class="modal-head"><div><div class="meta">ACCOUNT</div><h2>アカウント</h2></div><button class="close" id="closeAuth">×</button></div>
     <div class="authswitch"><button id="loginTab" class="active">ログイン</button><button id="signupTab">新規登録</button></div>
     <div id="signupNameRow" class="formrow" style="display:none"><label>表示名</label><input id="displayName" maxlength="40" placeholder="例：匿名太郎"></div>
-    <div id="signupInfoRow" style="display:none;font-size:12px;color:#667085;margin:8px 0">新規登録前に <a href="terms.html" style="color:#245b91">利用規約</a>・<a href="community-guidelines.html" style="color:#245b91">投稿ルール</a>・<a href="privacy.html" style="color:#245b91">プライバシー</a> をご確認ください。</div>
+    <div id="signupInfoRow" style="display:none;font-size:12px;color:#667085;margin:8px 0">
+      <div class="signup-promo"><strong>初回投稿キャンペーン</strong>アカウント登録後、最初の投稿をした方の中から抽選で、登録メールアドレス宛にAmazonギフトカード1,000円分をプレゼントします。</div>
+      新規登録前に <a href="terms.html" style="color:#245b91">利用規約</a>・<a href="community-guidelines.html" style="color:#245b91">投稿ルール</a>・<a href="privacy.html" style="color:#245b91">プライバシー</a> をご確認ください。
+    </div>
     <form id="authForm" autocomplete="on" onsubmit="return false">
     <div class="formrow"><label>メールアドレス</label><input id="email" name="username" type="email" autocomplete="username"></div>
     <div class="formrow"><label>パスワード</label><input id="password" name="password" type="password" autocomplete="current-password" minlength="8"></div>
