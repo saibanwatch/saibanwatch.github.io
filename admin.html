@@ -55,6 +55,7 @@
       <button class="btn tab" data-tab="corrections">訂正依頼</button>
       <button class="btn tab" data-tab="posts">投稿</button>
       <button class="btn tab" data-tab="cases">掲載事件</button>
+      <button class="btn tab" data-tab="quality">要約不足</button>
       <button class="btn tab" data-tab="people-linking">人物照合</button>\n      <button class="btn tab" data-tab="people-profiles">人物情報</button>
       <button class="btn tab" data-tab="users">ユーザー</button>
       <button class="btn tab" data-tab="ad-free">広告非表示</button>
@@ -155,6 +156,7 @@ async function loadTab(){
   if(currentTab==="corrections")return loadCorrections();
   if(currentTab==="posts")return loadPosts();
   if(currentTab==="cases")return loadCases();
+  if(currentTab==="quality")return loadQuality();
   if(currentTab==="people-linking")return loadPeopleLinking();\n  if(currentTab==="people-profiles")return loadPeopleProfiles();
   if(currentTab==="users")return loadUsers();
   if(currentTab==="ad-free")return loadAdFreeUsers();
@@ -229,6 +231,21 @@ async function loadPosts(){
     <div class="item"><div class="item-head"><div><span class="badge ${esc(p.status)}">${esc(p.status)}</span><span class="muted"> ${esc(dt(p.created_at))}</span></div></div>
     <div class="body">${esc(p.body)}</div><div class="muted">${p.case_id?"事件投稿":"人物投稿"}</div>
     <div class="actions"><button class="btn ok" onclick="setPostStatus('${p.id}','visible')">公開</button><button class="btn danger" onclick="setPostStatus('${p.id}','hidden')">非表示</button><button class="btn danger" onclick="setPostStatus('${p.id}','deleted')">削除扱い</button></div></div>`).join(""):'<div class="empty">投稿はありません。</div>';
+}
+
+async function loadQuality(){
+  const {data,error}=await sb.rpc("admin_summary_queue",{p_limit:100});
+  if(error){content.innerHTML='<div class="empty">要約の不足一覧を取得できませんでした。</div>';console.error(error);return}
+  if(!data?.length){content.innerHTML='<div class="empty">現在、要約の不足は見つかりません。</div>';return}
+  content.innerHTML='<p class="muted">要約が未完成の事件を最大100件表示しています。判決全文の取得済みを優先します。未登録項目を推測で補完せず、原資料を確認してください。</p>'+
+  data.map(c=>'<div class="item"><div class="item-head"><div><b>'+esc(c.title||"無題")+'</b>'+
+     '<div class="muted">'+esc(c.court||"")+(c.event_date?" · "+esc(c.event_date):"")+
+     ' · 状態: '+esc(c.summary_status||"未登録")+
+     (c.has_parsed_fulltext?' · 全文解析済み':c.has_pdf_url?' · PDFあり':' · PDF未確認')+
+     '</div></div><div class="actions">'+
+       '<a class="btn" target="_blank" rel="noopener noreferrer" href="case.html?id='+encodeURIComponent(c.case_id)+'">事件を開く</a>'+
+       (c.source_url?'<a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(c.source_url)+'">原資料</a>':'')+
+     '</div></div></div>').join("");
 }
 
 async function loadCases(){
