@@ -162,6 +162,45 @@ const authDialog=document.getElementById("authDialog");
 const personDialog=document.getElementById("personDialog");
 
 const hasOpinionTarget=s=>/(懲役|拘禁刑|禁錮|罰金|死刑|無期懲役|執行猶予|科料|拘留)/.test(s||"");
+
+function showFollowStatus(message){
+  const status=document.getElementById("followCaseStatus");
+  if(status)status.textContent=message||"";
+}
+async function syncFollowButton(markViewed=false){
+  const b=document.getElementById("followCaseBtn");
+  if(!b||!currentCase)return;
+  if(!user){b.textContent="☆ この事件を保存";showFollowStatus("ログイン後に保存できます。");return}
+  const {data,error}=await sb.from("case_follows").select("case_id")
+    .eq("user_id",user.id).eq("case_id",currentCase.id).maybeSingle();
+  if(error){showFollowStatus("保存状態を取得できませんでした。");return}
+  b.textContent=data?"★ 保存済み（解除する）":"☆ この事件を保存";
+  showFollowStatus("");
+  if(data&&markViewed){
+    await sb.from("case_follows").update({last_checked_at:new Date().toISOString()})
+      .eq("user_id",user.id).eq("case_id",currentCase.id);
+  }
+}
+function setupCaseFollow(){
+  const b=document.getElementById("followCaseBtn");
+  if(!b)return;
+  b.addEventListener("click",async()=>{
+    if(!user){needLogin();return}
+    if(!currentCase)return;
+    b.disabled=true;
+    const {data,error:readError}=await sb.from("case_follows").select("case_id")
+      .eq("user_id",user.id).eq("case_id",currentCase.id).maybeSingle();
+    if(readError){showFollowStatus("保存状態の取得に失敗しました。");b.disabled=false;return}
+    const result=data?
+      await sb.from("case_follows").delete().eq("user_id",user.id).eq("case_id",currentCase.id):
+      await sb.from("case_follows").insert({user_id:user.id,case_id:currentCase.id});
+    if(result.error){showFollowStatus("保存できませんでした。");b.disabled=false;return}
+    await syncFollowButton(false);
+    b.disabled=false;
+  });
+  syncFollowButton(true);
+}
+
 async function loadCase(){
   const q=new URLSearchParams(location.search),slug=q.get("slug"),id=q.get("id");
   let req=sb.from("cases").select("*");
@@ -182,6 +221,7 @@ async function loadCase(){
   document.getElementById("casePanel").innerHTML=
     '<div class="meta"><span class="badge">'+esc(data.category||"未分類")+'</span><span class="badge">'+esc(data.status||"")+'</span><span>'+esc(data.court||"")+'</span><span>'+esc(fmt(data.event_date))+'</span>'+(data.raw_metadata&&data.raw_metadata.case_number?'<span>'+esc(data.raw_metadata.case_number)+'</span>':'')+'</div>'+
     '<h1 class="title">'+esc(data.title)+'</h1>'+
+    '<div class="actions" style="margin:5px 0 12px"><button class="btn" id="followCaseBtn" type="button">☆ この事件を保存</button><span class="small" id="followCaseStatus" aria-live="polite"></span></div>'+
     '<p class="summary">'+esc(data.summary||"")+'</p>'+
     '<div class="grid">'+
       '<div class="box"><h3>'+esc(caseSummary?.side_a_label||(isCriminal?"検察側の主張":"原告・申立人側の主張"))+' <small>要約</small></h3><div>'+esc(caseSummary?.side_a_summary||claimPendingText(data))+'</div></div>'+
@@ -227,6 +267,7 @@ async function loadCase(){
       :'');
   document.querySelectorAll("#sentenceBox .opinion-btn").forEach(b=>b.onclick=()=>voteSentence(b.dataset.target,b.dataset.choice));
   document.querySelectorAll("#civilAdminJudgmentOpinion .opinion-btn").forEach(b=>b.onclick=()=>voteCivilAdminJudgment(b.dataset.choice));
+  setupCaseFollow();
   await Promise.all([
     loadPeople(),
     loadSources(),
@@ -408,7 +449,7 @@ async function loadPosts(){
 }
 function needLogin(){authDialog.showModal()}
 async function refreshUser(){const {data}=await sb.auth.getUser();user=data.user||null;document.getElementById("authBtn").textContent=user?"ログアウト":"ログイン";document.getElementById("accountLink").style.display=user?"inline-block":"none"}
-document.getElementById("authBtn").onclick=async()=>{if(user){await sb.auth.signOut();user=null;await refreshUser();if(currentCase){loadPosts();loadSentenceOpinion();}}else needLogin()};
+document.getElementById("authBtn").onclick=async()=>{if(user){await sb.auth.signOut();user=null;await refreshUser();if(currentCase){loadPosts();loadSentenceOpinion();syncFollowButton();}}else needLogin()};
 document.getElementById("authClose").onclick=()=>authDialog.close();
 document.getElementById("loginTab").onclick=()=>setMode("login");document.getElementById("signupTab").onclick=()=>setMode("signup");
 document.getElementById("resendConfirmBtn").onclick=async()=>{
@@ -432,7 +473,7 @@ document.getElementById("authSubmit").onclick=async()=>{
   }else{
     const {error}=await sb.auth.signInWithPassword({email,password});
     if(error){document.getElementById("authStatus").textContent="ログインできませんでした。";return}
-    await refreshUser();authDialog.close();if(currentCase){loadPosts();loadSentenceOpinion();}
+    await refreshUser();authDialog.close();if(currentCase){loadPosts();loadSentenceOpinion();syncFollowButton();}
   }
 };
 document.getElementById("postBtn").onclick=async()=>{
