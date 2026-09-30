@@ -207,7 +207,7 @@ function casePage(c){
   const dateLabel=c.event_date?jpdate(c.event_date):"";
   const seoBits=[c.court,dateLabel,jud?"判決":"",req?"求刑":""].filter(Boolean);
   const seoTitle=txt(c.title+(seoBits.length?"｜"+seoBits.join("・"):"")+"｜裁判ウォッチ",120);
-  const desc=txt([c.title,aliases.length?"別名・報道上の呼称："+aliases.join("、"):"",c.court,dateLabel,(sum||pros||courtv)?txt(sum||pros||courtv,115):"",jud?"判決："+txt(jud,120):"",req?"求刑："+txt(req,90):"","当事者の主張・裁判所の判断と出典を確認できます。"].filter(Boolean).join("。"),155);
+  const desc=txt([c.title,aliases.length?"別名・報道上の呼称："+aliases.join("、"):"",c.court,dateLabel,(sum||pros||courtv)?txt(sum||pros||courtv,115):"",jud?"判決："+txt(jud,120):"",req?"求刑："+txt(req,90):"","当事者の主張・裁判所の判断と出典を確認できます。"].filter(Boolean).map(x=>String(x).replace(/[。．\s]+$/g,"")).join("。")+"。",155);
   const ppl=(peopleByCase.get(c.id)||[]).slice(0,30), srcMain=safe(c.source_url);
   const allsrc=[...(srcMain?[{url:srcMain,title:c.source_label||"原資料",publisher:c.source_label||""}]:[]),...(sourcesByCase.get(c.id)||[]).filter(s=>safe(s.url)&&safe(s.url)!==srcMain)];
   const cf=catFile(c.category);
