@@ -13,17 +13,54 @@ body{margin:0;background:#f5f5f5;color:#222;font-family:-apple-system,BlinkMacSy
 <main>
 <section class="panel" id="loginPanel"><h1>アカウント設定</h1><p>ログインすると表示名を変更できます。</p><div class="field"><label>メールアドレス</label><input id="email" type="email"></div><div class="field"><label>パスワード</label><input id="password" type="password" minlength="8"></div><button class="btn primary" id="loginBtn">ログイン</button><p class="small status" id="loginStatus"></p></section>
 <section class="panel" id="profilePanel" style="display:none"><h1>アカウント設定</h1><p>投稿や投票などは表示名ではなく固定のユーザーIDに紐づいています。表示名を変更しても過去の投稿・評価履歴は同じアカウントのままです。</p><div class="field"><label>表示名</label><input id="displayName" maxlength="40"></div><button class="btn primary" id="saveBtn">表示名を変更</button> <a class="btn" id="publicProfileLink" href="#">公開プロフィールを見る</a><p class="small">表示名は24時間に1回変更できます。運営・公式と誤認させる名称やURLは使用できません。</p><p class="small status" id="profileStatus"></p></section>
+<section class="panel" id="followPanel" style="display:none">
+  <h2>保存した事件</h2>
+  <p class="small">事件が更新されると「更新あり」と表示します。メール通知はまだありません。</p>
+  <div id="followList" class="small">読み込み中...</div>
+</section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const sb=window.supabase.createClient("https://czhssdmwilnbrexqmtqg.supabase.co","sb_publishable_HhXl8I3L4z-UF168b6wSiQ_WrQXa1Uc");
 let user=null,myProfile=null;
 const loginPanel=document.getElementById("loginPanel"),profilePanel=document.getElementById("profilePanel");
+
+const escFollow=s=>String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+async function loadFollows(){
+  const box=document.getElementById("followList");
+  if(!user){box.textContent="ログイン後に表示されます。";return}
+  box.textContent="読み込み中...";
+  const {data,error}=await sb.from("case_follows")
+    .select("case_id,followed_at,last_checked_at,cases(id,slug,title,court,event_date,updated_at)")
+    .eq("user_id",user.id).order("followed_at",{ascending:false}).limit(80);
+  if(error){box.textContent="保存した事件を読み込めませんでした。";return}
+  if(!data?.length){box.textContent="まだ保存した事件はありません。事件ページの「☆ この事件を保存」から登録できます。";return}
+  box.innerHTML=data.map(x=>{
+    const c=x.cases||{},updated=c.updated_at&&new Date(c.updated_at)>new Date(x.last_checked_at||x.followed_at);
+    const href="case.html?"+(c.slug?"slug="+encodeURIComponent(c.slug):"id="+encodeURIComponent(x.case_id));
+    return '<div style="border-top:1px solid #eee;padding:11px 0">'+
+      '<a href="'+href+'"><strong>'+escFollow(c.title||"事件")+'</strong></a> '+(updated?'<strong style="color:#b9412d">更新あり</strong>':'')+
+      '<div class="small">'+escFollow(c.court||"")+(c.event_date?" · "+escFollow(c.event_date):"")+'</div>'+
+      '<button class="btn" style="padding:3px 7px;margin-top:5px" type="button" data-follow-remove="'+escFollow(x.case_id)+'">保存を解除</button></div>';
+  }).join("");
+  box.querySelectorAll("[data-follow-remove]").forEach(button=>{
+    button.addEventListener("click",async()=>{
+      if(!user)return;
+      button.disabled=true;
+      const {error}=await sb.from("case_follows").delete().eq("user_id",user.id).eq("case_id",button.dataset.followRemove);
+      if(error){button.disabled=false;alert("解除できませんでした。");return}
+      await loadFollows();
+    });
+  });
+}
+
 async function refresh(){
   const {data}=await sb.auth.getUser();user=data.user||null;
   document.getElementById("logoutBtn").style.display=user?"inline-block":"none";
   loginPanel.style.display=user?"none":"block";profilePanel.style.display=user?"block":"none";
+  document.getElementById("followPanel").style.display=user?"block":"none";
   if(!user)return;
+  loadFollows();
   const r=await sb.rpc("get_my_profile");myProfile=(r.data||[])[0]||null;
   if(!myProfile){document.getElementById("profileStatus").textContent="プロフィールを取得できませんでした。";return}
   document.getElementById("displayName").value=myProfile.display_name||"";
