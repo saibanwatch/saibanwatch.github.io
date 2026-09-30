@@ -157,10 +157,12 @@ async function loadTab(){
   if(currentTab==="posts")return loadPosts();
   if(currentTab==="cases")return loadCases();
   if(currentTab==="quality")return loadQuality();
-  if(currentTab==="people-linking")return loadPeopleLinking();\n  if(currentTab==="people-profiles")return loadPeopleProfiles();
+  if(currentTab==="people-linking")return loadPeopleLinking();
+  if(currentTab==="people-profiles")return loadPeopleProfiles();
   if(currentTab==="users")return loadUsers();
   if(currentTab==="ad-free")return loadAdFreeUsers();
-  if(currentTab==="ingestion")return loadIngestion();\n  if(currentTab==="traffic")return loadTraffic();
+  if(currentTab==="ingestion")return loadIngestion();
+  if(currentTab==="traffic")return loadTraffic();
   if(currentTab==="logs")return loadLogs();
 }
 
@@ -587,7 +589,7 @@ async function loadTraffic(){
       (top.length?top.map((r,i)=>'<div style="display:grid;grid-template-columns:44px minmax(180px,1fr) 90px 110px;gap:10px;padding:8px 0;border-top:1px solid var(--line)"><span>#'+(i+1)+'</span><span>'+esc(label(r))+'<div class="muted">'+esc(r.path)+'</div></span><span>PV '+Number(r.pv||0).toLocaleString("ja-JP")+'</span><span>訪問者 '+Number(r.visitors||0).toLocaleString("ja-JP")+'</span></div>').join(""):'<div class="empty">まだデータがありません。</div>')+
     '</div>';
 }
-nasync function loadLogs(){
+async function loadLogs(){
   const {data,error}=await sb.from("moderation_log").select("id,admin_id,action,target_type,target_id,note,created_at").order("created_at",{ascending:false}).limit(200);
   if(error){content.innerHTML='<div class="empty">操作履歴を取得できません。</div>';return}
   content.innerHTML=data?.length?data.map(r=>`
