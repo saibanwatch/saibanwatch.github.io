@@ -815,7 +815,7 @@ window.COURTWATCH_ADS?.init(sb);
     const authorHtml=p=>p.author_public_id?'<a href="user.html?id='+encodeURIComponent(p.author_public_id)+'">'+esc(p.display_name)+'</a>':esc(p.display_name);
     const fmt=d=>d?new Date(d+"T00:00:00").toLocaleDateString("ja-JP"):"";
     const claimPendingText=c=>c?.raw_metadata?.fulltext_pdf_url?"判決全文を確認し、要約を編集中です。":(/courts\.go\.jp\/hanrei\//.test(c?.source_url||"")?"判決全文を取得・確認中です。":"要約を作成できる原資料を確認中です。");
-    const needLogin=()=>{authStatus("投稿・投票・通報にはログインが必要です。");authDialog.showModal();};
+    const needLogin=()=>{authStatus("投稿・投票・通報にはログインが必要です。");window.COURTWATCH_ANALYTICS?.track("auth_prompt_view","index");authDialog.showModal();};
 
     function tutorialSeen(){
       try{return localStorage.getItem(ONBOARDING_KEY)==="seen"}catch{return false}
@@ -1064,6 +1064,7 @@ window.COURTWATCH_ADS?.init(sb);
       if(!user){needLogin();return;}
       const {error}=await sb.rpc("cast_case_sentence_vote",{p_case_id:currentCase.id,p_target:target,p_choice:choice});
       if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
+      window.COURTWATCH_ANALYTICS?.track("vote_success","case_sentence_"+target);
       await loadSentenceOpinion();
     }
 
@@ -1100,6 +1101,7 @@ window.COURTWATCH_ADS?.init(sb);
       if(!user){needLogin();return;}
       const {error}=await sb.rpc("cast_case_judgment_opinion_vote",{p_case_id:currentCase.id,p_choice:choice});
       if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
+      window.COURTWATCH_ANALYTICS?.track("vote_success","case_judgment");
       await loadCivilAdminJudgmentOpinion();
     }
 
@@ -1253,6 +1255,7 @@ window.COURTWATCH_ADS?.init(sb);
       if(!user){needLogin();return;}
       const {error}=await sb.rpc("cast_person_opinion_vote",{p_target_type:"person",p_target_id:currentPerson.id,p_choice:choice});
       if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
+      window.COURTWATCH_ANALYTICS?.track("vote_success","person_opinion");
       await loadModalPersonOpinion();
     }
     document.getElementById("modalPersonGoodBtn").onclick=()=>voteModalPersonOpinion("good");
@@ -1413,6 +1416,7 @@ window.COURTWATCH_ADS?.init(sb);
       const {error}=await sb.from("posts").insert({person_id:currentPerson.id,author_id:user.id,body:text});
       button.disabled=false;button.textContent="投稿する";
       if(error){alert("投稿に失敗しました。連続投稿の場合は少し間を空けてください。");console.error(error);return;}
+      window.COURTWATCH_ANALYTICS?.track("post_success","person_post");
       area.value="";await loadPersonPosts();
     };
 
@@ -1422,11 +1426,11 @@ window.COURTWATCH_ADS?.init(sb);
       button.disabled=true;button.textContent="投稿中...";
       const {error}=await sb.from("posts").insert({case_id:currentCase.id,author_id:user.id,body:text});
       button.disabled=false;button.textContent="投稿する";
-      if(error){alert("投稿に失敗しました。連続投稿の場合は少し間を空けてください。");console.error(error);return;} area.value="";await loadPosts();
+      if(error){alert("投稿に失敗しました。連続投稿の場合は少し間を空けてください。");console.error(error);return;} window.COURTWATCH_ANALYTICS?.track("post_success","case_post");area.value="";await loadPosts();
     };
 
     function setAuthMode(mode){
-      authMode=mode;document.getElementById("loginTab").classList.toggle("active",mode==="login");document.getElementById("signupTab").classList.toggle("active",mode==="signup");
+      authMode=mode;if(mode==="signup")window.COURTWATCH_ANALYTICS?.track("signup_view","index");document.getElementById("loginTab").classList.toggle("active",mode==="login");document.getElementById("signupTab").classList.toggle("active",mode==="signup");
       document.getElementById("signupNameRow").style.display=mode==="signup"?"block":"none";document.getElementById("signupInfoRow").style.display=mode==="signup"?"block":"none";document.getElementById("forgotPasswordRow").style.display=mode==="signup"?"none":"block";document.getElementById("authSubmit").textContent=mode==="signup"?"新規登録":"ログイン";authStatus("");
     }
     function authStatus(msg){document.getElementById("authStatus").textContent=msg}
@@ -1446,13 +1450,16 @@ window.COURTWATCH_ADS?.init(sb);
       authStatus("処理中...");
       if(authMode==="signup"){
         const redirectUrl=new URL("./",location.href).href;
+        window.COURTWATCH_ANALYTICS?.track("signup_submit","index");
         const {data,error}=await sb.auth.signUp({email,password,options:{data:{display_name:displayName},emailRedirectTo:redirectUrl}});
         if(error){authStatus(error.message);return;}
+        window.COURTWATCH_ANALYTICS?.track("signup_success","index");
         if(data.session){user=data.user;updateAuthButton();authStatus("登録してログインしました。");setTimeout(()=>authDialog.close(),500)}
         else authStatus("確認メールを送信しました。メール内の確認後、この画面からログインしてください。");
       }else{
         const {data,error}=await sb.auth.signInWithPassword({email,password});
         if(error){authStatus("ログインできませんでした。メール確認前の場合は確認メールをご確認ください。");return;}
+        window.COURTWATCH_ANALYTICS?.track("login_success","index");
         user=data.user;updateAuthButton();authStatus("ログインしました。");setTimeout(()=>authDialog.close(),400);if(currentCase){loadPosts();loadSentenceOpinion();}
       }
     };
