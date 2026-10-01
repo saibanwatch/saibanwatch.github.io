@@ -10,6 +10,20 @@ function swUuid(){
 function swStored(storage,key){
   try{let v=storage.getItem(key);if(!v){v=swUuid();storage.setItem(key,v)}return v}catch{return swUuid()}
 }
+const visitorId=swStored(localStorage,"sw_visitor_id");
+const sessionId=swStored(sessionStorage,"sw_session_id");
+const funnelEndpoint="https://czhssdmwilnbrexqmtqg.supabase.co/rest/v1/rpc/log_funnel_event";
+function track(eventName,eventDetail){
+  fetch(funnelEndpoint,{
+    method:"POST",
+    mode:"cors",
+    keepalive:true,
+    credentials:"omit",
+    headers:{"apikey":key,"Authorization":"Bearer "+key,"Content-Type":"application/json","Prefer":"return=minimal"},
+    body:JSON.stringify({p_event_name:eventName,p_event_detail:eventDetail||null,p_path:(location.pathname||"/").slice(0,300),p_visitor_id:visitorId,p_session_id:sessionId})
+  }).catch(()=>{});
+}
+window.COURTWATCH_ANALYTICS={track};
 function classify(){
   const path=location.pathname||"/";
   let type="static",entity=null;
@@ -38,7 +52,7 @@ function send(){
     keepalive:true,
     credentials:"omit",
     headers:{"apikey":key,"Authorization":"Bearer "+key,"Content-Type":"application/json","Prefer":"return=minimal"},
-    body:JSON.stringify({p_page_type:v.type,p_entity_key:v.entity,p_path:v.path,p_referrer_host:referrer(),p_visitor_id:swStored(localStorage,"sw_visitor_id"),p_session_id:swStored(sessionStorage,"sw_session_id")})
+    body:JSON.stringify({p_page_type:v.type,p_entity_key:v.entity,p_path:v.path,p_referrer_host:referrer(),p_visitor_id:visitorId,p_session_id:sessionId})
   }).catch(()=>{});
 }
 if(document.prerendering){document.addEventListener("prerenderingchange",send,{once:true});}
