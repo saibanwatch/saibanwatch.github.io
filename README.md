@@ -11,3 +11,6 @@
 - [裁判関係者一覧](https://saibanwatch.github.io/people.html)
 
 要約は原資料の代替ではありません。重要な内容は各ページに掲載した出典・原資料をご確認ください。
+
+
+<!-- handoff-public-write-test: 2026-10-01 -->
