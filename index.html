@@ -491,7 +491,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 </style>
   <script defer src="/analytics.js"></script>
 </head>
-<body data-build="2026-10-03-guided-tutorial-1">
+<body data-build="2026-10-03-guided-tutorial-2">
   <header><div class="nav">
     <a class="brand" href="#">裁判ウォッチ</a>
     <form class="search" id="caseSearchForm" role="search" autocomplete="off" style="display:flex;gap:6px" onsubmit="return false">
@@ -856,7 +856,7 @@ window.COURTWATCH_ADS?.init(sb);
       if(!target)return;
       const rect=target.getBoundingClientRect();
       if(rect.width<1||rect.height<1)return;
-      const pad=7,vw=window.innerWidth,vh=window.innerHeight;
+      const pad=7,vw=window.innerWidth,vh=window.innerHeight,gap=16,margin=10;
       const top=Math.max(0,rect.top-pad),left=Math.max(0,rect.left-pad),right=Math.min(vw,rect.right+pad),bottom=Math.min(vh,rect.bottom+pad);
       const masks={
         tutorialMaskTop:{top:0,left:0,width:vw,height:top},
@@ -871,12 +871,42 @@ window.COURTWATCH_ADS?.init(sb);
       const focus=document.getElementById("tutorialFocus");
       focus.hidden=false;focus.style.top=top+"px";focus.style.left=left+"px";focus.style.width=Math.max(0,right-left)+"px";focus.style.height=Math.max(0,bottom-top)+"px";
       tutorialCoach.hidden=false;
-      const cw=tutorialCoach.offsetWidth,ch=tutorialCoach.offsetHeight,gap=16,margin=10;
-      let coachTop=bottom+gap;
-      if(coachTop+ch>vh-margin)coachTop=top-ch-gap;
-      if(coachTop<margin)coachTop=Math.max(margin,vh-ch-margin);
-      let coachLeft=rect.left+rect.width/2-cw/2;
+      tutorialCoach.style.maxHeight="";
+      tutorialCoach.style.overflowY="";
+      tutorialCoach.style.top=margin+"px";
+      tutorialCoach.style.left=margin+"px";
+      const cw=tutorialCoach.offsetWidth;
+      let ch=tutorialCoach.offsetHeight;
+      const above=Math.max(0,top-gap-margin);
+      const below=Math.max(0,vh-bottom-gap-margin);
+      const leftSpace=Math.max(0,left-gap-margin);
+      const rightSpace=Math.max(0,vw-right-gap-margin);
+      let coachTop,coachLeft;
+
+      if(vw>=760&&rightSpace>=cw){
+        coachLeft=right+gap;
+        coachTop=Math.max(margin,Math.min(vh-ch-margin,rect.top+rect.height/2-ch/2));
+      }else if(vw>=760&&leftSpace>=cw){
+        coachLeft=left-cw-gap;
+        coachTop=Math.max(margin,Math.min(vh-ch-margin,rect.top+rect.height/2-ch/2));
+      }else if(below>=ch){
+        coachTop=bottom+gap;
+        coachLeft=rect.left+rect.width/2-cw/2;
+      }else if(above>=ch){
+        coachTop=top-ch-gap;
+        coachLeft=rect.left+rect.width/2-cw/2;
+      }else{
+        const useBelow=below>=above;
+        const available=Math.max(120,useBelow?below:above);
+        tutorialCoach.style.maxHeight=available+"px";
+        tutorialCoach.style.overflowY="auto";
+        ch=tutorialCoach.offsetHeight;
+        coachTop=useBelow?bottom+gap:Math.max(margin,top-gap-ch);
+        coachLeft=rect.left+rect.width/2-cw/2;
+      }
+
       coachLeft=Math.max(margin,Math.min(vw-cw-margin,coachLeft));
+      coachTop=Math.max(margin,Math.min(vh-ch-margin,coachTop));
       tutorialCoach.style.top=coachTop+"px";
       tutorialCoach.style.left=coachLeft+"px";
     }
