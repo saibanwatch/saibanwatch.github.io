@@ -491,7 +491,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 </style>
   <script defer src="/analytics.js"></script>
 </head>
-<body data-build="2026-10-03-pager-bottom-1">
+<body data-build="2026-10-03-no-auto-scroll-2">
   <header><div class="nav">
     <a class="brand" href="#">裁判ウォッチ</a>
     <form class="search" id="caseSearchForm" role="search" autocomplete="off" style="display:flex;gap:6px" onsubmit="return false">
@@ -968,7 +968,7 @@ window.COURTWATCH_ADS?.init(sb);
         tutorialOpenedCase=false;
       }
       tutorialStep=Math.max(0,Math.min(2,nextStep));
-      renderTutorial(true,true);
+      renderTutorial(false);
     }
     function openTutorial(force=false){
       if(!force&&tutorialSeen())return;
@@ -1630,7 +1630,7 @@ window.COURTWATCH_ADS?.init(sb);
       const btn=e.target.closest?.('#caseList .case-card button[onclick^="openCase"]');
       if(!btn)return;
       tutorialOpenedCase=true;
-      setTimeout(()=>{if(tutorialActive){tutorialStep=1;renderTutorial(true);}},220);
+      setTimeout(()=>{if(tutorialActive){tutorialStep=1;renderTutorial(false);}},220);
     });
     window.addEventListener("resize",()=>{if(tutorialActive)positionTutorial();});
     window.addEventListener("scroll",()=>{if(tutorialActive)positionTutorial();},true);
@@ -1659,8 +1659,16 @@ window.COURTWATCH_ADS?.init(sb);
     document.getElementById("clearSearchButton").onclick=()=>{document.getElementById("searchInput").value="";currentQuery="";currentPeopleQuery="";tagCaseMatchIds=new Set();tagPersonMatchIds=new Set();tagMentionMatchIds=new Set();const pi=document.getElementById("peopleSearchInput");if(pi)pi.value="";currentPage=1;renderCases("search");renderPeople();};
     document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSearch();}});
     document.getElementById("sortMode").addEventListener("change",()=>{currentPage=1;renderCases("sort");});
-    const goPrevPage=()=>{if(currentPage>1){currentPage--;renderCases("page");}};
-    const goNextPage=()=>{currentPage++;renderCases("page");};
+    const changeCasePage=delta=>{
+      const pageX=window.scrollX,pageY=window.scrollY;
+      if(document.activeElement instanceof HTMLElement)document.activeElement.blur();
+      currentPage+=delta;
+      renderCases("page");
+      window.scrollTo(pageX,pageY);
+      requestAnimationFrame(()=>window.scrollTo(pageX,pageY));
+    };
+    const goPrevPage=()=>{if(currentPage>1)changeCasePage(-1);};
+    const goNextPage=()=>{changeCasePage(1);};
     document.getElementById("prevPage").onclick=goPrevPage;
     document.getElementById("prevPageBottom").onclick=goPrevPage;
     document.getElementById("nextPage").onclick=goNextPage;
