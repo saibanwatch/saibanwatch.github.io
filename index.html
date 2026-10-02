@@ -491,7 +491,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 </style>
   <script defer src="/analytics.js"></script>
 </head>
-<body data-build="2026-10-03-guided-tutorial-2">
+<body data-build="2026-10-03-guided-tutorial-3">
   <header><div class="nav">
     <a class="brand" href="#">裁判ウォッチ</a>
     <form class="search" id="caseSearchForm" role="search" autocomplete="off" style="display:flex;gap:6px" onsubmit="return false">
@@ -910,7 +910,7 @@ window.COURTWATCH_ADS?.init(sb);
       tutorialCoach.style.top=coachTop+"px";
       tutorialCoach.style.left=coachLeft+"px";
     }
-    function renderTutorial(scrollTarget=true){
+    function renderTutorial(scrollTarget=true,preservePagePosition=false){
       const steps=[
         {
           title:"① まず「投票・投稿」を押す",
@@ -945,8 +945,12 @@ window.COURTWATCH_ADS?.init(sb);
       signup.textContent=user?"チュートリアルを終える":"アカウントを作る";
       tutorialCoach.hidden=false;
       const target=tutorialTarget();
-      if(scrollTarget&&target)target.scrollIntoView({behavior:"smooth",block:"center",inline:"nearest"});
-      setTimeout(positionTutorial,scrollTarget?260:0);
+      if(scrollTarget&&target){
+        const pageX=window.scrollX,pageY=window.scrollY;
+        target.scrollIntoView({behavior:preservePagePosition?"auto":"smooth",block:preservePagePosition?"nearest":"center",inline:"nearest"});
+        if(preservePagePosition)window.scrollTo(pageX,pageY);
+      }
+      setTimeout(positionTutorial,scrollTarget&&!preservePagePosition?260:0);
     }
     async function setTutorialStep(nextStep){
       if(nextStep===tutorialStep)return;
@@ -963,7 +967,7 @@ window.COURTWATCH_ADS?.init(sb);
         tutorialOpenedCase=false;
       }
       tutorialStep=Math.max(0,Math.min(2,nextStep));
-      renderTutorial(true);
+      renderTutorial(true,true);
     }
     function openTutorial(force=false){
       if(!force&&tutorialSeen())return;
