@@ -792,7 +792,6 @@ window.COURTWATCH_ADS?.init(sb);
       localStorage.setItem("courtwatch_ad_state",JSON.stringify(state));
     }
     function shouldShowAd(actionName){
-      if(tutorialActive)return false;
       if(!AD_CONFIG.enabled||!AD_CONFIG.eligibleActions.has(actionName)) return false;
       const s=adState();
       s.count=(s.count||0)+1;
