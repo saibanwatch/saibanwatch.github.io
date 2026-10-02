@@ -491,7 +491,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 </style>
   <script defer src="/analytics.js"></script>
 </head>
-<body data-build="2026-10-03-guided-tutorial-3">
+<body data-build="2026-10-03-pager-bottom-1">
   <header><div class="nav">
     <a class="brand" href="#">裁判ウォッチ</a>
     <form class="search" id="caseSearchForm" role="search" autocomplete="off" style="display:flex;gap:6px" onsubmit="return false">
@@ -532,6 +532,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       <div class="section-head" id="cases"><h2>いま見られる裁判</h2><span>新しい順</span></div>
       <div id="caseFilterNotice" class="notice" style="display:none;margin:6px 0 10px"></div>
       <div id="caseList"><div class="empty">裁判データを読み込み中...</div></div>
+      <div class="list-controls" style="justify-content:flex-end;margin-top:12px"><div class="pager"><button id="prevPageBottom">前へ</button><span id="pageInfoBottom" class="notice">1 / 1</span><button id="nextPageBottom">次へ</button></div></div>
       <div class="ad native-ad" id="adIndexInline" data-ad-slot="index-inline"></div>
 
       <div class="section-head" id="people"><h2>裁判関係者</h2><span id="peopleCount">事件資料・報道等で確認できた人物</span></div>
@@ -1174,8 +1175,11 @@ window.COURTWATCH_ADS?.init(sb);
       currentPage=Math.min(Math.max(1,currentPage),safeTotalPages);
       const pageRows=rows.slice((currentPage-1)*pageSize,currentPage*pageSize);
       document.getElementById("pageInfo").textContent=currentPage+" / "+safeTotalPages;
+      document.getElementById("pageInfoBottom").textContent=currentPage+" / "+safeTotalPages;
       document.getElementById("prevPage").disabled=currentPage<=1;
+      document.getElementById("prevPageBottom").disabled=currentPage<=1;
       document.getElementById("nextPage").disabled=currentPage>=safeTotalPages;
+      document.getElementById("nextPageBottom").disabled=currentPage>=safeTotalPages;
       document.getElementById("caseList").innerHTML=pageRows.length?pageRows.map(c=>`
         <article class="case-card" data-case-id="${c.id}">
           <div class="meta"><span class="badge">${esc(c.category||"未分類")}</span><span class="badge ${c.status==="審理中"?"live":""}">${esc(c.status||"")}</span><span>${esc(c.court||"")}</span><span>${esc(fmt(c.event_date))}${c.raw_metadata?.time_jst?" "+esc(c.raw_metadata.time_jst):""}</span>${c.raw_metadata?.case_number?'<span>'+esc(c.raw_metadata.case_number)+'</span>':""}</div>
@@ -1655,8 +1659,12 @@ window.COURTWATCH_ADS?.init(sb);
     document.getElementById("clearSearchButton").onclick=()=>{document.getElementById("searchInput").value="";currentQuery="";currentPeopleQuery="";tagCaseMatchIds=new Set();tagPersonMatchIds=new Set();tagMentionMatchIds=new Set();const pi=document.getElementById("peopleSearchInput");if(pi)pi.value="";currentPage=1;renderCases("search");renderPeople();};
     document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSearch();}});
     document.getElementById("sortMode").addEventListener("change",()=>{currentPage=1;renderCases("sort");});
-    document.getElementById("prevPage").onclick=()=>{if(currentPage>1){currentPage--;renderCases("page");window.scrollTo({top:document.getElementById("cases").offsetTop-80,behavior:"smooth"})}};
-    document.getElementById("nextPage").onclick=()=>{currentPage++;renderCases("page");window.scrollTo({top:document.getElementById("cases").offsetTop-80,behavior:"smooth"})};
+    const goPrevPage=()=>{if(currentPage>1){currentPage--;renderCases("page");}};
+    const goNextPage=()=>{currentPage++;renderCases("page");};
+    document.getElementById("prevPage").onclick=goPrevPage;
+    document.getElementById("prevPageBottom").onclick=goPrevPage;
+    document.getElementById("nextPage").onclick=goNextPage;
+    document.getElementById("nextPageBottom").onclick=goNextPage;
     document.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");currentFilter=b.dataset.filter||"all";currentPage=1;renderCases("filter");});
     const peopleSearchInput=document.getElementById("peopleSearchInput");
     const enablePeopleSearch=()=>{peopleSearchInput.readOnly=false;};
