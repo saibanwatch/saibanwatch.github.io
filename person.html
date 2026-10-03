@@ -348,7 +348,7 @@ async function castPersonOpinion(choice){
     p_choice:choice
   });
   if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
-  window.COURTWATCH_ANALYTICS?.track("vote_success","person_opinion");
+  window.COURTWATCH_ANALYTICS?.track("vote_complete","person_opinion");
   await loadPersonOpinion();
 }
 document.getElementById("personGoodBtn").onclick=()=>castPersonOpinion("good");
@@ -368,21 +368,21 @@ document.getElementById("resendConfirmBtn").onclick=async()=>{
   if(error&&/rate|limit/i.test(error.message||"")){status.textContent="送信回数の上限に達しました。しばらく待ってからお試しください。";return}
   status.textContent="確認メールを再送しました。受信箱をご確認ください。";
 };
-function setMode(m){authMode=m;if(m==="signup")window.COURTWATCH_ANALYTICS?.track("signup_view","person");document.getElementById("nameRow").style.display=m==="signup"?"block":"none";document.getElementById("signupInfoRow").style.display=m==="signup"?"block":"none";document.getElementById("forgotPasswordRow").style.display=m==="signup"?"none":"block";document.getElementById("authSubmit").textContent=m==="signup"?"新規登録":"ログイン";document.getElementById("authStatus").textContent=""}
+function setMode(m){authMode=m;if(m==="signup")window.COURTWATCH_ANALYTICS?.track("signup_start","person");document.getElementById("nameRow").style.display=m==="signup"?"block":"none";document.getElementById("signupInfoRow").style.display=m==="signup"?"block":"none";document.getElementById("forgotPasswordRow").style.display=m==="signup"?"none":"block";document.getElementById("authSubmit").textContent=m==="signup"?"新規登録":"ログイン";document.getElementById("authStatus").textContent=""}
 document.getElementById("authSubmit").onclick=async()=>{
   const email=document.getElementById("email").value.trim(),password=document.getElementById("password").value,name=document.getElementById("displayName").value.trim()||"匿名ユーザー";
   if(!email||password.length<8){document.getElementById("authStatus").textContent="メールと8文字以上のパスワードを入力してください。";return}
   if(authMode==="signup"){
     const redirectUrl=new URL("./",location.href).href;
-    window.COURTWATCH_ANALYTICS?.track("signup_submit","person");
+    window.COURTWATCH_ANALYTICS?.track("signup_start","person");
     const {data,error}=await sb.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:redirectUrl}});
     if(error){document.getElementById("authStatus").textContent=error.message;return}
-    window.COURTWATCH_ANALYTICS?.track("signup_success","person");
+    window.COURTWATCH_ANALYTICS?.track("signup_complete","person");
     document.getElementById("authStatus").textContent=data.session?"登録しました。":"確認メールを送信しました。";
   }else{
     const {error}=await sb.auth.signInWithPassword({email,password});
     if(error){document.getElementById("authStatus").textContent="ログインできませんでした。";return}
-    window.COURTWATCH_ANALYTICS?.track("login_success","person");
+    window.COURTWATCH_ANALYTICS?.track("login","person");
     await refreshUser();authDialog.close();if(currentTargetId)loadPosts();if(currentTargetId)loadPersonOpinion();
   }
 };
@@ -397,13 +397,13 @@ document.getElementById("postBtn").onclick=async()=>{
   if(!target)return;
   const {error}=await sb.from("posts").insert({...target,author_id:user.id,body});
   if(error){console.error(error);alert("投稿できませんでした。連続投稿の場合は少し間を空けてください。");return}
-  window.COURTWATCH_ANALYTICS?.track("post_success",currentTargetType==="mention"?"mention_post":"person_post");
+  window.COURTWATCH_ANALYTICS?.track("post_complete",currentTargetType==="mention"?"mention_post":"person_post");
   document.getElementById("postText").value="";await loadPosts();
 };
-async function vote(id,value){if(!user)return needLogin();const {error}=await sb.from("votes").upsert({post_id:id,user_id:user.id,value},{onConflict:"post_id,user_id"});if(!error){window.COURTWATCH_ANALYTICS?.track("vote_success","post_vote");loadPosts()}}
+async function vote(id,value){if(!user)return needLogin();const {error}=await sb.from("votes").upsert({post_id:id,user_id:user.id,value},{onConflict:"post_id,user_id"});if(!error){window.COURTWATCH_ANALYTICS?.track("vote_complete","post_vote");loadPosts()}}
 async function reportPost(id){if(!user)return needLogin();const reason=prompt("通報理由");if(!reason?.trim())return;const {error}=await sb.from("reports").insert({post_id:id,reporter_id:user.id,reason:reason.trim().slice(0,500)});alert(error?"通報できませんでした。":"通報しました。")}
 async function deletePost(id){if(!user||!confirm("削除しますか？"))return;const {error}=await sb.from("posts").delete().eq("id",id);if(!error)loadPosts()}
-document.getElementById("correctionBtn").onclick=async()=>{if(!currentPerson)return;if(!user)return needLogin();const reason=prompt("訂正が必要だと思う理由（10文字以上）");if(!reason||reason.trim().length<10)return;const url=prompt("根拠URL（任意）")||null;const {error}=await sb.from("correction_requests").insert({requester_id:user.id,person_id:currentPerson.id,reason:reason.trim().slice(0,2000),supporting_url:url?.trim()||null});alert(error?"送信できませんでした。":"訂正依頼を受け付けました。")}
+document.getElementById("correctionBtn").onclick=async()=>{if(!currentPerson)return;if(!user)return needLogin();const reason=prompt("訂正が必要だと思う理由（10文字以上）");if(!reason||reason.trim().length<10)return;const url=prompt("根拠URL（任意）")||null;const {error}=await sb.from("correction_requests").insert({requester_id:user.id,person_id:currentPerson.id,reason:reason.trim().slice(0,2000),supporting_url:url?.trim()||null});if(!error)window.COURTWATCH_ANALYTICS?.track("correction_request","person",{entityType:"person",entityKey:currentPerson.id});alert(error?"送信できませんでした。":"訂正依頼を受け付けました。")}
 sb.auth.onAuthStateChange((_e,s)=>{user=s?.user||null;document.getElementById("authBtn").textContent=user?"ログアウト":"ログイン";document.getElementById("accountLink").style.display=user?"inline-block":"none";if(currentTargetId){loadPersonOpinion();loadPersonTags();}setTimeout(()=>window.COURTWATCH_ADS?.reloadIfEligibilityChanged(sb),0);});
 (async()=>{await refreshUser();await loadPerson()})();
 </script>
