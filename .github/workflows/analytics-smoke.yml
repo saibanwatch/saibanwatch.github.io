@@ -30,46 +30,23 @@ jobs:
           endpoint='https://czhssdmwilnbrexqmtqg.supabase.co/rest/v1/rpc/log_analytics_event_v1'
           visitor='38b89c6a-a1ea-4320-aa04-91d3741a581f'
           session='765c4451-5a40-489a-94de-1d5cc0db9e2c'
-
           post_event() {
-            local event_id="$1" event_name="$2" detail="$3" origin="$4"
-            local payload
-            payload=$(python3 - "$event_id" "$event_name" "$detail" "$visitor" "$session" <<'PY'
-import json,sys
-event_id,event_name,detail,visitor,session=sys.argv[1:]
-print(json.dumps({
-  "p_event_id":event_id,
-  "p_event_name":event_name,
-  "p_event_detail":detail or None,
-  "p_page_type":"home",
-  "p_entity_type":None,
-  "p_entity_key":None,
-  "p_path":"/",
-  "p_referrer_host":"direct",
-  "p_traffic_source":"direct",
-  "p_traffic_medium":"none",
-  "p_campaign":None,
-  "p_device_type":"desktop",
-  "p_visitor_id":visitor,
-  "p_session_id":session,
-  "p_previous_path":None,
-  "p_duration_ms":None
-}))
-PY
-)
+            event_id="$1"
+            event_name="$2"
+            detail="$3"
+            payload="{\"p_event_id\":\"$event_id\",\"p_event_name\":\"$event_name\",\"p_event_detail\":\"$detail\",\"p_page_type\":\"home\",\"p_entity_type\":null,\"p_entity_key\":null,\"p_path\":\"/\",\"p_referrer_host\":\"direct\",\"p_traffic_source\":\"direct\",\"p_traffic_medium\":\"none\",\"p_campaign\":null,\"p_device_type\":\"desktop\",\"p_visitor_id\":\"$visitor\",\"p_session_id\":\"$session\",\"p_previous_path\":null,\"p_duration_ms\":null}"
             code=$(curl --silent --show-error -o /tmp/rpc.out -w '%{http_code}' \
               -X POST "$endpoint" \
-              -H "Origin: $origin" \
+              -H 'Origin: https://saibanwatch.github.io' \
               -H "apikey: $SUPABASE_KEY" \
               -H "Authorization: Bearer $SUPABASE_KEY" \
-              -H "Content-Type: application/json" \
-              -H "Prefer: return=minimal" \
+              -H 'Content-Type: application/json' \
+              -H 'Prefer: return=minimal' \
               --data "$payload")
             test "$code" = "200" -o "$code" = "204"
           }
-
-          post_event '81048c62-9afd-4555-a205-c945f699f05c' 'page_view' '' 'https://saibanwatch.github.io'
-          post_event '81048c62-9afd-4555-a205-c945f699f05c' 'page_view' '' 'https://saibanwatch.github.io'
-          post_event '782c76cf-d77d-41ca-ba4b-728738d41ba7' 'page_view' '' 'https://saibanwatch.github.io'
-          post_event '1f0cd517-dd18-4d9d-a988-29c0e8352029' 'search_run' 'query' 'https://saibanwatch.github.io'
-          post_event '1f0cd517-dd18-4d9d-a988-29c0e8352029' 'search_run' 'query' 'https://saibanwatch.github.io'
+          post_event '81048c62-9afd-4555-a205-c945f699f05c' 'page_view' ''
+          post_event '81048c62-9afd-4555-a205-c945f699f05c' 'page_view' ''
+          post_event '782c76cf-d77d-41ca-ba4b-728738d41ba7' 'page_view' ''
+          post_event '1f0cd517-dd18-4d9d-a988-29c0e8352029' 'search_run' 'query'
+          post_event '1f0cd517-dd18-4d9d-a988-29c0e8352029' 'search_run' 'query'
