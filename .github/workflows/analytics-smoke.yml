@@ -21,6 +21,19 @@ jobs:
           grep -q 'COURTWATCH_ANALYTICS' /tmp/analytics.js
           grep -q '裁判ウォッチ' /tmp/index.html
 
+      - name: Execute production page in a real browser
+        shell: bash
+        run: |
+          set -euo pipefail
+          chrome="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          test -n "$chrome"
+          "$chrome" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --user-agent='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/154.0.0.0 Safari/537.36' \
+            --virtual-time-budget=5000 --dump-dom \
+            'https://saibanwatch.github.io/?utm_source=analytics_smoke&utm_medium=browser&utm_campaign=smoke_20261003' \
+            > /tmp/browser-dom.html
+          grep -q '裁判ウォッチ' /tmp/browser-dom.html
+
       - name: Verify analytics RPC over HTTPS
         shell: bash
         env:
