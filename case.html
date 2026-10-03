@@ -195,6 +195,7 @@ function setupCaseFollow(){
       await sb.from("case_follows").delete().eq("user_id",user.id).eq("case_id",currentCase.id):
       await sb.from("case_follows").insert({user_id:user.id,case_id:currentCase.id});
     if(result.error){showFollowStatus("保存できませんでした。");b.disabled=false;return}
+    window.COURTWATCH_ANALYTICS?.track("follow",data?"remove":"save",{entityType:"case",entityKey:currentCase.slug||currentCase.id});
     await syncFollowButton(false);
     b.disabled=false;
   });
@@ -300,7 +301,7 @@ async function voteSentence(target,choice){
   if(!user)return needLogin();
   const {error}=await sb.rpc("cast_case_sentence_vote",{p_case_id:currentCase.id,p_target:target,p_choice:choice});
   if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
-  window.COURTWATCH_ANALYTICS?.track("vote_success","case_sentence_"+target);
+  window.COURTWATCH_ANALYTICS?.track("vote_complete","case_sentence_"+target);
   await loadSentenceOpinion();
 }
 
@@ -324,7 +325,7 @@ async function voteCivilAdminJudgment(choice){
   if(!user)return needLogin();
   const {error}=await sb.rpc("cast_case_judgment_opinion_vote",{p_case_id:currentCase.id,p_choice:choice});
   if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
-  window.COURTWATCH_ANALYTICS?.track("vote_success","case_judgment");
+  window.COURTWATCH_ANALYTICS?.track("vote_complete","case_judgment");
   await loadCivilAdminJudgmentOpinion();
 }
 
@@ -371,6 +372,7 @@ async function openPerson(id){
   const {data,error}=await sb.from("people").select("*").eq("id",id).maybeSingle();
   if(error||!data){console.error(error);return}
   currentPerson=data;
+  window.COURTWATCH_ANALYTICS?.track("person_view","case_modal",{entityType:"person",entityKey:data.id});
   document.getElementById("personModalInitial").textContent=(data.display_name||"?").slice(0,1);
   const photo=document.getElementById("personModalPhoto");
   if(data.photo_url){photo.src=data.photo_url;photo.style.display="block";photo.onerror=()=>{photo.style.display="none"}}
@@ -418,7 +420,7 @@ async function voteModalPersonOpinion(choice){
   if(!user)return needLogin();
   const {error}=await sb.rpc("cast_person_opinion_vote",{p_target_type:"person",p_target_id:currentPerson.id,p_choice:choice});
   if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return}
-  window.COURTWATCH_ANALYTICS?.track("vote_success","person_opinion");
+  window.COURTWATCH_ANALYTICS?.track("vote_complete","person_opinion");
   await loadModalPersonOpinion();
 }
 document.getElementById("personModalGoodBtn").onclick=()=>voteModalPersonOpinion("good");
@@ -464,21 +466,21 @@ document.getElementById("resendConfirmBtn").onclick=async()=>{
   if(error&&/rate|limit/i.test(error.message||"")){status.textContent="送信回数の上限に達しました。しばらく待ってからお試しください。";return}
   status.textContent="確認メールを再送しました。受信箱をご確認ください。";
 };
-function setMode(m){authMode=m;if(m==="signup")window.COURTWATCH_ANALYTICS?.track("signup_view","case");document.getElementById("nameRow").style.display=m==="signup"?"block":"none";document.getElementById("signupInfoRow").style.display=m==="signup"?"block":"none";document.getElementById("forgotPasswordRow").style.display=m==="signup"?"none":"block";document.getElementById("authSubmit").textContent=m==="signup"?"新規登録":"ログイン";document.getElementById("authStatus").textContent=""}
+function setMode(m){authMode=m;if(m==="signup")window.COURTWATCH_ANALYTICS?.track("signup_start","case");document.getElementById("nameRow").style.display=m==="signup"?"block":"none";document.getElementById("signupInfoRow").style.display=m==="signup"?"block":"none";document.getElementById("forgotPasswordRow").style.display=m==="signup"?"none":"block";document.getElementById("authSubmit").textContent=m==="signup"?"新規登録":"ログイン";document.getElementById("authStatus").textContent=""}
 document.getElementById("authSubmit").onclick=async()=>{
   const email=document.getElementById("email").value.trim(),password=document.getElementById("password").value,name=document.getElementById("displayName").value.trim()||"匿名ユーザー";
   if(!email||password.length<8){document.getElementById("authStatus").textContent="メールと8文字以上のパスワードを入力してください。";return}
   if(authMode==="signup"){
     const redirectUrl=new URL("./",location.href).href;
-    window.COURTWATCH_ANALYTICS?.track("signup_submit","case");
+    window.COURTWATCH_ANALYTICS?.track("signup_start","case");
     const {data,error}=await sb.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:redirectUrl}});
     if(error){document.getElementById("authStatus").textContent=error.message;return}
-    window.COURTWATCH_ANALYTICS?.track("signup_success","case");
+    window.COURTWATCH_ANALYTICS?.track("signup_complete","case");
     document.getElementById("authStatus").textContent=data.session?"登録しました。":"確認メールを送信しました。";
   }else{
     const {error}=await sb.auth.signInWithPassword({email,password});
     if(error){document.getElementById("authStatus").textContent="ログインできませんでした。";return}
-    window.COURTWATCH_ANALYTICS?.track("login_success","case");
+    window.COURTWATCH_ANALYTICS?.track("login","case");
     await refreshUser();authDialog.close();if(currentCase){loadPosts();loadSentenceOpinion();syncFollowButton();}
   }
 };
@@ -486,13 +488,13 @@ document.getElementById("postBtn").onclick=async()=>{
   const body=document.getElementById("postText").value.trim();if(!body)return;if(!user)return needLogin();
   const {error}=await sb.from("posts").insert({case_id:currentCase.id,author_id:user.id,body});
   if(error){alert("投稿できませんでした。連続投稿の場合は少し間を空けてください。");return}
-  window.COURTWATCH_ANALYTICS?.track("post_success","case_post");
+  window.COURTWATCH_ANALYTICS?.track("post_complete","case_post");
   document.getElementById("postText").value="";await loadPosts();
 };
-async function vote(id,value){if(!user)return needLogin();const {error}=await sb.from("votes").upsert({post_id:id,user_id:user.id,value},{onConflict:"post_id,user_id"});if(!error){window.COURTWATCH_ANALYTICS?.track("vote_success","post_vote");loadPosts()}}
+async function vote(id,value){if(!user)return needLogin();const {error}=await sb.from("votes").upsert({post_id:id,user_id:user.id,value},{onConflict:"post_id,user_id"});if(!error){window.COURTWATCH_ANALYTICS?.track("vote_complete","post_vote");loadPosts()}}
 async function reportPost(id){if(!user)return needLogin();const reason=prompt("通報理由");if(!reason?.trim())return;const {error}=await sb.from("reports").insert({post_id:id,reporter_id:user.id,reason:reason.trim().slice(0,500)});alert(error?"通報できませんでした。":"通報しました。")}
 async function deletePost(id){if(!user||!confirm("削除しますか？"))return;const {error}=await sb.from("posts").delete().eq("id",id);if(!error)loadPosts()}
-document.getElementById("correctionBtn").onclick=async()=>{if(!user)return needLogin();const reason=prompt("訂正が必要だと思う理由（10文字以上）");if(!reason||reason.trim().length<10)return;const url=prompt("根拠URL（任意）")||null;const {error}=await sb.from("correction_requests").insert({requester_id:user.id,case_id:currentCase.id,reason:reason.trim().slice(0,2000),supporting_url:url?.trim()||null});alert(error?"送信できませんでした。":"訂正依頼を受け付けました。")}
+document.getElementById("correctionBtn").onclick=async()=>{if(!user)return needLogin();const reason=prompt("訂正が必要だと思う理由（10文字以上）");if(!reason||reason.trim().length<10)return;const url=prompt("根拠URL（任意）")||null;const {error}=await sb.from("correction_requests").insert({requester_id:user.id,case_id:currentCase.id,reason:reason.trim().slice(0,2000),supporting_url:url?.trim()||null});if(!error)window.COURTWATCH_ANALYTICS?.track("correction_request","case",{entityType:"case",entityKey:currentCase.slug||currentCase.id});alert(error?"送信できませんでした。":"訂正依頼を受け付けました。")}
 sb.auth.onAuthStateChange((_e,s)=>{user=s?.user||null;document.getElementById("authBtn").textContent=user?"ログアウト":"ログイン";document.getElementById("accountLink").style.display=user?"inline-block":"none";if(currentCase){loadSentenceOpinion();loadCaseTags();if(["民事","行政"].includes(currentCase.category))loadCivilAdminJudgmentOpinion();}if(currentPerson){loadModalPersonOpinion();loadPersonModalTags();}setTimeout(()=>window.COURTWATCH_ADS?.reloadIfEligibilityChanged(sb),0);});
 (async()=>{await refreshUser();await loadCase()})();
 </script>
