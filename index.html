@@ -973,6 +973,7 @@ window.COURTWATCH_ADS?.init(sb);
     function openTutorial(force=false){
       if(!force&&tutorialSeen())return;
       if(!force&&document.querySelector("dialog[open]"))return;
+      window.COURTWATCH_ANALYTICS?.track("tutorial_start",force?"replay":"auto");
       tutorialActive=true;
       tutorialOpenedCase=false;
       tutorialStep=0;
@@ -987,6 +988,7 @@ window.COURTWATCH_ADS?.init(sb);
       tutorialOpenedCase=false;
     }
     function completeTutorial(){
+      window.COURTWATCH_ANALYTICS?.track("tutorial_complete","complete");
       markTutorialSeen();
       tutorialActive=false;
       hideTutorialChrome();
@@ -1213,7 +1215,7 @@ window.COURTWATCH_ADS?.init(sb);
       if(!user){needLogin();return;}
       const {error}=await sb.rpc("cast_case_sentence_vote",{p_case_id:currentCase.id,p_target:target,p_choice:choice});
       if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
-      window.COURTWATCH_ANALYTICS?.track("vote_success","case_sentence_"+target);
+      window.COURTWATCH_ANALYTICS?.track("vote_complete","case_sentence_"+target);
       await loadSentenceOpinion();
     }
 
@@ -1250,7 +1252,7 @@ window.COURTWATCH_ADS?.init(sb);
       if(!user){needLogin();return;}
       const {error}=await sb.rpc("cast_case_judgment_opinion_vote",{p_case_id:currentCase.id,p_choice:choice});
       if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
-      window.COURTWATCH_ANALYTICS?.track("vote_success","case_judgment");
+      window.COURTWATCH_ANALYTICS?.track("vote_complete","case_judgment");
       await loadCivilAdminJudgmentOpinion();
     }
 
@@ -1259,6 +1261,7 @@ window.COURTWATCH_ADS?.init(sb);
       currentPerson=null;
       currentCase=casesCache.find(c=>c.id===id);
       if(!currentCase)return;
+      window.COURTWATCH_ANALYTICS?.track("case_view","modal",{entityType:"case",entityKey:currentCase.slug||currentCase.id});
 
       document.getElementById("modalCourt").textContent=currentCase.court||"";
       document.getElementById("modalTitle").textContent=currentCase.title||"";
@@ -1404,7 +1407,7 @@ window.COURTWATCH_ADS?.init(sb);
       if(!user){needLogin();return;}
       const {error}=await sb.rpc("cast_person_opinion_vote",{p_target_type:"person",p_target_id:currentPerson.id,p_choice:choice});
       if(error){console.error(error);alert("投票できませんでした。時間をおいて再度お試しください。");return;}
-      window.COURTWATCH_ANALYTICS?.track("vote_success","person_opinion");
+      window.COURTWATCH_ANALYTICS?.track("vote_complete","person_opinion");
       await loadModalPersonOpinion();
     }
     document.getElementById("modalPersonGoodBtn").onclick=()=>voteModalPersonOpinion("good");
@@ -1418,6 +1421,7 @@ window.COURTWATCH_ADS?.init(sb);
         currentPerson=data;
       }
       if(!currentPerson)return;
+      window.COURTWATCH_ANALYTICS?.track("person_view","modal",{entityType:"person",entityKey:currentPerson.id});
       if(caseDialog.classList.contains("open"))closeCaseOverlay();
       document.getElementById("personName").textContent=currentPerson.display_name;
       document.getElementById("personRole").textContent=roleLabel(currentPerson.role);
@@ -1510,6 +1514,7 @@ window.COURTWATCH_ADS?.init(sb);
       if(targetType==="case")payload.case_id=targetId; else payload.person_id=targetId;
       const {error}=await sb.from("correction_requests").insert(payload);
       if(error){console.error(error);alert("訂正依頼を送信できませんでした。");return;}
+      window.COURTWATCH_ANALYTICS?.track("correction_request",targetType);
       alert("訂正依頼を受け付けました。");
     }
 
@@ -1537,6 +1542,7 @@ window.COURTWATCH_ADS?.init(sb);
       });
       btn.disabled=false;
       if(error){console.error(error);statusEl.textContent="送信できませんでした。時間をおいて再度お試しください。";return;}
+      window.COURTWATCH_ANALYTICS?.track("feature_request",category||"other");
       document.getElementById("featureRequestForm").reset();
       statusEl.textContent="要望を受け付けました。ありがとうございます。";
     }
@@ -1544,7 +1550,9 @@ window.COURTWATCH_ADS?.init(sb);
     async function votePost(postId,value){
       if(!user)return needLogin();
       const {error}=await sb.from("votes").upsert({post_id:postId,user_id:user.id,value},{onConflict:"post_id,user_id"});
-      if(error){alert("投票に失敗しました。");console.error(error);return;} await refreshActivePosts();
+      if(error){alert("投票に失敗しました。");console.error(error);return;}
+      window.COURTWATCH_ANALYTICS?.track("vote_complete","post_vote");
+      await refreshActivePosts();
     }
     async function reportPost(postId){
       if(!user)return needLogin();
@@ -1565,7 +1573,7 @@ window.COURTWATCH_ADS?.init(sb);
       const {error}=await sb.from("posts").insert({person_id:currentPerson.id,author_id:user.id,body:text});
       button.disabled=false;button.textContent="投稿する";
       if(error){alert("投稿に失敗しました。連続投稿の場合は少し間を空けてください。");console.error(error);return;}
-      window.COURTWATCH_ANALYTICS?.track("post_success","person_post");
+      window.COURTWATCH_ANALYTICS?.track("post_complete","person_post");
       area.value="";await loadPersonPosts();
     };
 
@@ -1575,11 +1583,11 @@ window.COURTWATCH_ADS?.init(sb);
       button.disabled=true;button.textContent="投稿中...";
       const {error}=await sb.from("posts").insert({case_id:currentCase.id,author_id:user.id,body:text});
       button.disabled=false;button.textContent="投稿する";
-      if(error){alert("投稿に失敗しました。連続投稿の場合は少し間を空けてください。");console.error(error);return;} window.COURTWATCH_ANALYTICS?.track("post_success","case_post");area.value="";await loadPosts();
+      if(error){alert("投稿に失敗しました。連続投稿の場合は少し間を空けてください。");console.error(error);return;} window.COURTWATCH_ANALYTICS?.track("post_complete","case_post");area.value="";await loadPosts();
     };
 
     function setAuthMode(mode){
-      authMode=mode;if(mode==="signup")window.COURTWATCH_ANALYTICS?.track("signup_view","index");document.getElementById("loginTab").classList.toggle("active",mode==="login");document.getElementById("signupTab").classList.toggle("active",mode==="signup");
+      authMode=mode;if(mode==="signup")window.COURTWATCH_ANALYTICS?.track("signup_start","index");document.getElementById("loginTab").classList.toggle("active",mode==="login");document.getElementById("signupTab").classList.toggle("active",mode==="signup");
       document.getElementById("signupNameRow").style.display=mode==="signup"?"block":"none";document.getElementById("signupInfoRow").style.display=mode==="signup"?"block":"none";document.getElementById("forgotPasswordRow").style.display=mode==="signup"?"none":"block";document.getElementById("authSubmit").textContent=mode==="signup"?"新規登録":"ログイン";authStatus("");
     }
     function authStatus(msg){document.getElementById("authStatus").textContent=msg}
@@ -1599,16 +1607,16 @@ window.COURTWATCH_ADS?.init(sb);
       authStatus("処理中...");
       if(authMode==="signup"){
         const redirectUrl=new URL("./",location.href).href;
-        window.COURTWATCH_ANALYTICS?.track("signup_submit","index");
+        window.COURTWATCH_ANALYTICS?.track("signup_start","index");
         const {data,error}=await sb.auth.signUp({email,password,options:{data:{display_name:displayName},emailRedirectTo:redirectUrl}});
         if(error){authStatus(error.message);return;}
-        window.COURTWATCH_ANALYTICS?.track("signup_success","index");
+        window.COURTWATCH_ANALYTICS?.track("signup_complete","index");
         if(data.session){user=data.user;updateAuthButton();authStatus("登録してログインしました。");setTimeout(()=>authDialog.close(),500)}
         else authStatus("確認メールを送信しました。メール内の確認後、この画面からログインしてください。");
       }else{
         const {data,error}=await sb.auth.signInWithPassword({email,password});
         if(error){authStatus("ログインできませんでした。メール確認前の場合は確認メールをご確認ください。");return;}
-        window.COURTWATCH_ANALYTICS?.track("login_success","index");
+        window.COURTWATCH_ANALYTICS?.track("login","index");
         user=data.user;updateAuthButton();authStatus("ログインしました。");setTimeout(()=>authDialog.close(),400);if(currentCase){loadPosts();loadSentenceOpinion();}
       }
     };
@@ -1646,6 +1654,7 @@ window.COURTWATCH_ADS?.init(sb);
     searchInput.addEventListener("focus",enableSearchInput,{once:true});
     const runSearch=async()=>{
       currentQuery=document.getElementById("searchInput").value.trim().toLowerCase();
+      window.COURTWATCH_ANALYTICS?.track("search_run",currentQuery?"query":"empty");
       currentPage=1;tagCaseMatchIds=new Set();tagPersonMatchIds=new Set();tagMentionMatchIds=new Set();
       if(currentQuery){
         const rows=await window.COURTWATCH_TAGS.search(sb,currentQuery);
