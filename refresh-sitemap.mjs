@@ -143,10 +143,10 @@ const topicDefs=[
   {slug:"environment",name:"環境・廃棄物・公害の裁判例",desc:"環境、廃棄物、公害、土砂などに関する掲載裁判例を確認できます。",re:/環境|廃棄物|公害|土砂/},
   {slug:"education",name:"学校・教員・教育の裁判例",desc:"学校、教員、教育、大学などに関する掲載裁判例を確認できます。",re:/学校|教員|教育|大学/},
   {slug:"appeals",name:"控訴・上告の裁判例",desc:"控訴、上告に関する掲載裁判例を確認できます。",re:/控訴|上告/},
-  {slug:"suspended-sentence",name:"執行猶予付き判決の裁判例",desc:"判決結果に執行猶予が確認できる掲載裁判例を確認できます。",re:/執行猶予/,match:c=>/執行猶予/.test(String(c.judgment_result||""))},
-  {slug:"life-sentence",name:"無期懲役・無期拘禁刑の裁判例",desc:"判決または求刑に無期懲役・無期拘禁刑が確認できる掲載裁判例を確認できます。",re:/無期懲役|無期拘禁刑/,match:c=>/無期懲役|無期拘禁刑/.test(String(c.judgment_result||"")+" "+String(c.sentencing_request||c.sentence_request||""))},
-  {slug:"death-penalty",name:"死刑判決・死刑求刑の裁判例",desc:"判決または求刑に死刑が確認できる掲載裁判例を確認できます。",re:/死刑/,match:c=>/死刑/.test(String(c.judgment_result||"")+" "+String(c.sentencing_request||c.sentence_request||""))},
-  {slug:"fine",name:"罰金刑の裁判例",desc:"判決または求刑に罰金が確認できる掲載裁判例を確認できます。",re:/罰金/,match:c=>/罰金/.test(String(c.judgment_result||"")+" "+String(c.sentencing_request||c.sentence_request||""))}
+  {slug:"suspended-sentence",name:"執行猶予付き判決の裁判例",desc:"判決結果に執行猶予が確認できる掲載裁判例を確認できます。",re:/執行猶予/,match:c=>c.category==="刑事"&&/執行猶予/.test(String(c.judgment_result||""))},
+  {slug:"life-sentence",name:"無期懲役・無期拘禁刑の裁判例",desc:"判決または求刑に無期懲役・無期拘禁刑が確認できる掲載裁判例を確認できます。",re:/無期懲役|無期拘禁刑/,match:c=>c.category==="刑事"&&/無期懲役|無期拘禁刑/.test(String(c.judgment_result||"")+" "+String(c.sentencing_request||c.sentence_request||""))},
+  {slug:"death-penalty",name:"死刑判決・死刑求刑の裁判例",desc:"判決または求刑に死刑が確認できる掲載裁判例を確認できます。",re:/死刑/,match:c=>c.category==="刑事"&&/死刑/.test(String(c.judgment_result||"")+" "+String(c.sentencing_request||c.sentence_request||""))},
+  {slug:"fine",name:"罰金刑の裁判例",desc:"判決または求刑に罰金が確認できる掲載裁判例を確認できます。",re:/罰金/,match:c=>c.category==="刑事"&&/罰金/.test(String(c.judgment_result||"")+" "+String(c.sentencing_request||c.sentence_request||""))}
 ].map(t=>({...t,match:t.match||((c)=>t.re.test(caseText(c)))}));
 
 const topicIdsByCase=new Map(cases.map(c=>[c.id,topicDefs.filter(t=>t.match(c)).map(t=>t.slug)]));
