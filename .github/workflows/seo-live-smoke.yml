@@ -23,7 +23,7 @@ jobs:
             a=$(curl -fsSL https://saibanwatch.github.io/gender-sentencing.html || true)
             b=$(curl -fsSL https://saibanwatch.github.io/topics/nonconsensual-intercourse.html || true)
             c=$(curl -fsSL https://saibanwatch.github.io/cases/official-95878-detail3.html || true)
-            if printf '%s' "$a" | grep -q '司法の「女割」はある' \
+            if printf '%s' "$a" | grep -q '死亡結果を伴う重大事件に絞ると' \
               && printf '%s' "$b" | grep -q 'バキュームフェラ事件' \
               && printf '%s' "$c" | grep -q '口腔性交を不同意性交等罪として重く処罰するのは合憲か'; then
               ok=1
@@ -32,11 +32,11 @@ jobs:
             sleep 10
           done
           test "$ok" = 1
-          printf 'verified\n' > seo-live-check.txt
+          printf 'verified-subgroup\n' > seo-live-check-2.txt
       - name: Commit verification marker
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add seo-live-check.txt
+          git add seo-live-check-2.txt
           git commit -m "Verify high-intent SEO pages live"
           git push
