@@ -1,0 +1,49 @@
+name: Special feature live smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "special/**"
+      - "index.html"
+      - "debates.html"
+      - "sitemaps/static.xml"
+      - ".github/workflows/special-feature-smoke.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: special-feature-live-smoke
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify live special feature pages
+        shell: bash
+        run: |
+          set -eu
+          SITE="https://saibanwatch.github.io"
+          ok=0
+          for i in $(seq 1 30); do
+            gender=$(curl -fsSL "$SITE/special/justice-gender-gap.html" || true)
+            consent=$(curl -fsSL "$SITE/special/nonconsensual-intercourse.html" || true)
+            home=$(curl -fsSL "$SITE/" || true)
+            debates=$(curl -fsSL "$SITE/debates.html" || true)
+            sitemap=$(curl -fsSL "$SITE/sitemaps/static.xml" || true)
+
+            if grep -Fq '司法の「女割」はある' <<< "$gender" \
+              && grep -Fq '不同意性交等罪は広すぎる？' <<< "$consent" \
+              && grep -Fq 'const TOPIC="nonconsensual-intercourse";' <<< "$consent" \
+              && grep -Fq 'special/nonconsensual-intercourse.html' <<< "$home" \
+              && grep -Fq 'special/nonconsensual-intercourse.html' <<< "$debates" \
+              && grep -Fq 'special/nonconsensual-intercourse.html' <<< "$sitemap"; then
+              ok=1
+              break
+            fi
+            sleep 10
+          done
+          test "$ok" = 1
