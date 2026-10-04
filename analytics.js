@@ -137,8 +137,8 @@ function setupAuto(){
     if(b.matches&&b.matches(".filter"))track("filter_use",token(b.dataset.filter,60)||"case_filter");
     if(b.closest&&b.closest("#peopleFilter"))track("filter_use",token(b.dataset.role,60)||token(b.dataset.filter,60)||"people_filter");
     const oc=(b.getAttribute&&b.getAttribute("onclick"))||"";
-    if((b.matches&&b.matches(".opinion-btn"))||/^vote(Post)?\(/.test(oc)||/^vote\(/.test(oc)){
-      const d=token((b.dataset&&((b.dataset.target||"")+"_"+(b.dataset.choice||""))),80)||"vote";
+    if((b.matches&&b.matches(".opinion-btn,[data-vote-cta]"))||/^vote(Post)?\(/.test(oc)||/^vote\(/.test(oc)){
+      const d=token((b.dataset&&((b.dataset.voteCta||b.dataset.target||"")+"_"+(b.dataset.choice||""))),80)||"vote";
       track("vote_click",d);
     }
   },true);
