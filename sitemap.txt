@@ -3490,6 +3490,7 @@ https://saibanwatch.github.io/topics/arson.html
 https://saibanwatch.github.io/topics/drugs.html
 https://saibanwatch.github.io/topics/traffic.html
 https://saibanwatch.github.io/topics/sexual-offenses.html
+https://saibanwatch.github.io/topics/nonconsensual-intercourse.html
 https://saibanwatch.github.io/topics/child-abuse.html
 https://saibanwatch.github.io/topics/stalking.html
 https://saibanwatch.github.io/topics/organized-crime.html
@@ -3607,6 +3608,8 @@ https://saibanwatch.github.io/acquittals.html
 https://saibanwatch.github.io/sentencing.html
 https://saibanwatch.github.io/latest.html
 https://saibanwatch.github.io/popular.html
+https://saibanwatch.github.io/statistics.html
+https://saibanwatch.github.io/gender-sentencing.html
 https://saibanwatch.github.io/terms.html
 https://saibanwatch.github.io/community-guidelines.html
 https://saibanwatch.github.io/privacy.html

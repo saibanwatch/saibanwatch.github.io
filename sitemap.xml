@@ -732,7 +732,7 @@
   <url><loc>https://saibanwatch.github.io/cases/official-94099-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94100-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94102-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://saibanwatch.github.io/cases/official-94103-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://saibanwatch.github.io/cases/official-94103-detail4.html</loc><lastmod>2026-10-04</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94106-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94107-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94109-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
@@ -775,7 +775,7 @@
   <url><loc>https://saibanwatch.github.io/cases/official-94176-detail2.html</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94177-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94179-detail2.html</loc><lastmod>2026-10-03</lastmod></url>
-  <url><loc>https://saibanwatch.github.io/cases/official-94180-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://saibanwatch.github.io/cases/official-94180-detail4.html</loc><lastmod>2026-10-04</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94181-detail4.html</loc><lastmod>2026-10-04</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94182-detail4.html</loc><lastmod>2026-10-04</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94183-detail4.html</loc><lastmod>2026-10-04</lastmod></url>
@@ -813,7 +813,7 @@
   <url><loc>https://saibanwatch.github.io/cases/official-94229-detail2.html</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94230-detail2.html</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94235-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://saibanwatch.github.io/cases/official-94239-detail4.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://saibanwatch.github.io/cases/official-94239-detail4.html</loc><lastmod>2026-10-04</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94240-detail2.html</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94252-detail4.html</loc><lastmod>2026-10-04</lastmod></url>
   <url><loc>https://saibanwatch.github.io/cases/official-94253-detail4.html</loc><lastmod>2026-10-03</lastmod></url>
@@ -3492,6 +3492,7 @@
   <url><loc>https://saibanwatch.github.io/topics/drugs.html</loc></url>
   <url><loc>https://saibanwatch.github.io/topics/traffic.html</loc></url>
   <url><loc>https://saibanwatch.github.io/topics/sexual-offenses.html</loc></url>
+  <url><loc>https://saibanwatch.github.io/topics/nonconsensual-intercourse.html</loc></url>
   <url><loc>https://saibanwatch.github.io/topics/child-abuse.html</loc></url>
   <url><loc>https://saibanwatch.github.io/topics/stalking.html</loc></url>
   <url><loc>https://saibanwatch.github.io/topics/organized-crime.html</loc></url>
@@ -3609,6 +3610,8 @@
   <url><loc>https://saibanwatch.github.io/sentencing.html</loc></url>
   <url><loc>https://saibanwatch.github.io/latest.html</loc></url>
   <url><loc>https://saibanwatch.github.io/popular.html</loc></url>
+  <url><loc>https://saibanwatch.github.io/statistics.html</loc></url>
+  <url><loc>https://saibanwatch.github.io/gender-sentencing.html</loc></url>
   <url><loc>https://saibanwatch.github.io/terms.html</loc></url>
   <url><loc>https://saibanwatch.github.io/community-guidelines.html</loc></url>
   <url><loc>https://saibanwatch.github.io/privacy.html</loc></url>
