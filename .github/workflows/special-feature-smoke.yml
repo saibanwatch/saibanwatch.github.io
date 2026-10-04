@@ -28,7 +28,7 @@ jobs:
             debates=$(curl -fsSL "$SITE/debates.html" || true)
             sitemap=$(curl -fsSL "$SITE/sitemaps/static.xml" || true)
             polls=$(curl -fsSL -X POST "$SUPA/rest/v1/rpc/get_discussion_topic_polls" \
-              -H "apikey: $KEY" -H "Authorization: Bearer $KEY" \
+              -H "apikey: $KEY" \
               -H "Content-Type: application/json" \
               -d '{"p_topic_slug":"justice-gender-gap"}' || true)
             if printf '%s' "$page" | grep -q '司法の「女割」はある' \
