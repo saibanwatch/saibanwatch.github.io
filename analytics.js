@@ -123,6 +123,13 @@ function setupAuto(){
       promos.forEach(x=>io.observe(x));
     }
   }
+  const campaignBlocks=[...document.querySelectorAll("[data-campaign-view]")];
+  for(const el of campaignBlocks){
+    const detail=token(el.dataset.campaignView,80)||"campaign";
+    if(!("IntersectionObserver" in window)){trackOnce("campaign_view",detail);continue}
+    const io=new IntersectionObserver(entries=>{if(entries.some(x=>x.isIntersecting)){trackOnce("campaign_view",detail);io.disconnect()}},{threshold:.25});
+    io.observe(el);
+  }
   document.addEventListener("focusin",e=>{
     const t=e.target;if(!(t instanceof HTMLElement))return;
     if(t.id==="postText"||t.id==="personPostText")trackOnce("post_start",page.entityType||"discussion");
@@ -132,6 +139,7 @@ function setupAuto(){
     const id=b.id||"";
     if(id==="signupTab")track("signup_click","signup_tab");
     if(id==="tutorialSignup"){track("campaign_cta_click","first_post_campaign");track("signup_click","tutorial")}
+    if(b.matches&&b.matches("[data-campaign-cta]"))track("campaign_cta_click",token(b.dataset.campaignCta,80)||"campaign");
     if(id==="prevPage"||id==="prevPageBottom")track("pagination","prev");
     if(id==="nextPage"||id==="nextPageBottom")track("pagination","next");
     if(b.matches&&b.matches(".filter"))track("filter_use",token(b.dataset.filter,60)||"case_filter");
