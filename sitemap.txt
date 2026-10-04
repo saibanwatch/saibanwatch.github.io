@@ -3610,6 +3610,8 @@ https://saibanwatch.github.io/latest.html
 https://saibanwatch.github.io/popular.html
 https://saibanwatch.github.io/statistics.html
 https://saibanwatch.github.io/gender-sentencing.html
+https://saibanwatch.github.io/debates.html
+https://saibanwatch.github.io/special/justice-gender-gap.html
 https://saibanwatch.github.io/terms.html
 https://saibanwatch.github.io/community-guidelines.html
 https://saibanwatch.github.io/privacy.html
