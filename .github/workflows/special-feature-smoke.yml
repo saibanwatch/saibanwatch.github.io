@@ -1,0 +1,53 @@
+name: Special feature live smoke
+on:
+  push:
+    paths:
+      - .github/workflows/special-feature-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify live feature and public poll API
+        shell: bash
+        run: |
+          set -euo pipefail
+          SITE="https://saibanwatch.github.io"
+          SUPA="https://czhssdmwilnbrexqmtqg.supabase.co"
+          KEY="sb_publishable_HhXl8I3L4z-UF168b6wSiQ_WrQXa1Uc"
+          ok=0
+          for i in $(seq 1 30); do
+            page=$(curl -fsSL "$SITE/special/justice-gender-gap.html" || true)
+            home=$(curl -fsSL "$SITE/" || true)
+            debates=$(curl -fsSL "$SITE/debates.html" || true)
+            sitemap=$(curl -fsSL "$SITE/sitemaps/static.xml" || true)
+            polls=$(curl -fsSL -X POST "$SUPA/rest/v1/rpc/get_discussion_topic_polls" \
+              -H "apikey: $KEY" -H "Authorization: Bearer $KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"p_topic_slug":"justice-gender-gap"}' || true)
+            if printf '%s' "$page" | grep -q '司法の「女割」はある' \
+              && printf '%s' "$page" | grep -q '投票・投稿受付中' \
+              && printf '%s' "$home" | grep -q '特設企画・投票受付中' \
+              && printf '%s' "$debates" | grep -q '判決は重い？軽い？' \
+              && printf '%s' "$sitemap" | grep -q 'special/justice-gender-gap.html' \
+              && printf '%s' "$polls" | grep -q '日本の刑事司法では'; then
+              ok=1
+              break
+            fi
+            sleep 10
+          done
+          test "$ok" = 1
+          printf 'special-feature-live-ok\n' > special-feature-live-ok.txt
+      - name: Commit marker
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add special-feature-live-ok.txt
+          git commit -m "Verify special discussion feature live"
+          git push
