@@ -152,7 +152,10 @@ document.getElementById("authSubmit").onclick=async()=>{
     if(error){status.textContent=error.message;return;}
     window.COURTWATCH_ANALYTICS?.track("signup_complete","special_gender_gap");
     status.textContent=data.session?"登録しました。":"確認メールを送信しました。メール内のリンクを開いてください。";
-    if(data.session){await refreshUser();authDialog.close();}
+    if(data.session){
+      await refreshUser();authDialog.close();
+      if(pendingVote){const p=pendingVote;pendingVote=null;await castVote(p.pollId,p.optionId);}
+    }
   }else{
     const {error}=await sb.auth.signInWithPassword({email,password});
     if(error){status.textContent="ログインできませんでした。";return;}
