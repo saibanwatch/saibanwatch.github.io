@@ -3614,7 +3614,6 @@ https://saibanwatch.github.io/popular.html
 https://saibanwatch.github.io/statistics.html
 https://saibanwatch.github.io/gender-sentencing.html
 https://saibanwatch.github.io/debates.html
-https://saibanwatch.github.io/special/
 https://saibanwatch.github.io/special/justice-gender-gap.html
 https://saibanwatch.github.io/special/nonconsensual-intercourse.html
 https://saibanwatch.github.io/terms.html
