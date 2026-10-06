@@ -450,10 +450,13 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .signup-promo strong{display:block;color:var(--accent-dark);font-size:13px;margin-bottom:2px}
 
 .home-specials{margin:0 0 10px;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.home-specials-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 14px 9px;border-bottom:1px solid var(--line2)}
+.home-specials-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px 9px;border-bottom:1px solid var(--line2)}
 .home-specials-head h2{margin:0;font-size:15px;line-height:1.4}
 .home-specials-head h2::before{content:"";display:inline-block;width:3px;height:13px;margin-right:7px;background:var(--accent);vertical-align:-1px;border-radius:1px}
-.home-specials-head span{font-size:10px;color:#999;white-space:nowrap}
+.home-specials-actions{display:flex;align-items:center;gap:9px;white-space:nowrap}
+.home-specials-status{font-size:10px;color:#999}
+.home-specials-all{display:inline-flex;align-items:center;gap:5px;border:1px solid #c9c9c9;border-radius:4px;background:#fff;padding:5px 9px;color:#4f6578;font-size:11px;font-weight:800;line-height:1.2}
+.home-specials-all:hover{border-color:#999;background:#f7f7f7;text-decoration:none}
 .home-special-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .home-special-card{padding:13px 14px 12px;min-width:0}
 .home-special-card+.home-special-card{border-left:1px solid var(--line2)}
@@ -472,6 +475,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   .home-special-grid{grid-template-columns:1fr}
   .home-special-card+.home-special-card{border-left:0;border-top:1px solid var(--line2)}
   .home-specials-head{padding:9px 12px 8px}
+  .home-specials-status{display:none}
+  .home-specials-all{padding:5px 8px}
   .home-special-card{padding:12px}
   .campaign-strip{align-items:flex-start}
 }
@@ -544,7 +549,10 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       <section class="home-specials" data-campaign-view="home_specials" aria-labelledby="homeSpecialsTitle">
         <div class="home-specials-head">
           <h2 id="homeSpecialsTitle">特設企画</h2>
-          <span><a href="special/">一覧を見る</a> · 投票・投稿受付中</span>
+          <div class="home-specials-actions">
+            <span class="home-specials-status">投票・投稿受付中</span>
+            <a class="home-specials-all" href="special/" aria-label="特設企画の一覧を見る">特設企画一覧 <span aria-hidden="true">→</span></a>
+          </div>
         </div>
         <div class="home-special-grid">
           <article class="home-special-card">
@@ -606,7 +614,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       <div class="box" id="seoLatestCases">
         <h3>新着・更新された裁判</h3>
         <ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.8">
-          <!-- SEO_LATEST_CASES_START --><li><a href="cases/official-97108-detail2.html">株式買取価格決定に対する抗告審の変更決定に対する許可抗告事件</a> <span class="notice">2026年9月30日</span></li><li><a href="cases/official-97107-detail2.html">手数料還付申立て却下決定に対する抗告棄却決定に対する許可抗告事件</a> <span class="notice">2026年9月30日</span></li><li><a href="cases/official-94127-detail4.html">公職選挙法違反</a> <span class="notice">2025年4月16日</span></li><li><a href="cases/official-94102-detail4.html">国家賠償請求事件(独立当事者参加事件)</a> <span class="notice">2025年4月16日</span></li><li><a href="cases/official-97071-detail4.html">麻薬及び向精神薬取締法違反、窃盗</a> <span class="notice">2026年8月25日</span></li><li><a href="cases/official-96986-detail8.html">特許権侵害差止等請求控訴事件</a> <span class="notice">2026年8月27日</span></li><li><a href="cases/official-96998-detail7.html">損害賠償等請求事件</a> <span class="notice">2026年8月27日</span></li><li><a href="cases/official-96956-detail4.html">詐欺</a> <span class="notice">2026年8月10日</span></li><!-- SEO_LATEST_CASES_END -->
+          <!-- SEO_LATEST_CASES_START --><li><a href="cases/official-96903-detail8.html">審決取消請求事件</a></li><li><a href="cases/official-97051-detail4.html">懲戒処分取消等請求控訴事件</a></li><li><a href="cases/official-96925-detail8.html">審決取消請求事件</a></li><li><a href="cases/official-96924-detail8.html">審決取消請求事件</a></li><li><a href="cases/official-96923-detail8.html">審決取消請求事件</a></li><li><a href="cases/official-97036-detail4.html">損害賠償請求事件</a></li><li><a href="cases/official-96975-detail8.html">発信者情報開示命令の申立てについての決定に対する異議の訴え控訴事件</a></li><li><a href="cases/official-96963-detail8.html">特許権侵害差止等請求控訴事件</a></li><!-- SEO_LATEST_CASES_END -->
         </ul>
         <p class="notice" style="margin:8px 0 0"><a href="latest.html">新着・更新一覧をもっと見る</a></p>
       </div>
