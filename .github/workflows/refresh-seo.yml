@@ -6,6 +6,12 @@ on:
       - ".github/workflows/refresh-seo.yml"
       - "scripts/refresh-sitemap.mjs"
       - "scripts/submit-indexnow.mjs"
+      - "**/*.html"
+      - "robots.txt"
+      - "feed.xml"
+      - "sitemap.xml"
+      - "sitemap.txt"
+      - "sitemaps/**"
       - "seo.css"
       - "21d6e780c8c007515162b511ae98a991668a603d437c5119.txt"
   schedule:
@@ -36,7 +42,7 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Notify IndexNow
-        if: github.event_name == 'push' || steps.changes.outputs.changed == 'true'
+        if: steps.changes.outputs.changed == 'true' || (github.event_name == 'push' && github.actor != 'github-actions[bot]')
         run: node scripts/submit-indexnow.mjs
       - name: Commit generated SEO changes
         if: steps.changes.outputs.changed == 'true'
