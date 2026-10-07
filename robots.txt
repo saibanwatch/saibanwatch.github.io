@@ -1,3 +1,15 @@
+# ChatGPT Search crawler
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin.html
+Disallow: /reset-password.html
+
+# User-requested ChatGPT browsing
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin.html
+Disallow: /reset-password.html
+
 User-agent: *
 Allow: /
 Disallow: /admin.html
