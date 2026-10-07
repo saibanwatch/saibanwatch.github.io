@@ -49,7 +49,7 @@ function referrerHost(){
 }
 function isAiSource(v){
   const s=String(v||"").trim().toLowerCase();
-  return s==="openai"||s==="chatgpt"||/(^|\.)(chatgpt\.com|openai\.com|copilot\.com|perplexity\.ai|claude\.ai|gemini\.google\.com)$/.test(s);
+  return s==="openai"||s==="chatgpt"||/(^|\.)(chatgpt\.com|openai\.com|copilot\.com|copilot\.microsoft\.com|perplexity\.ai|claude\.ai|gemini\.google\.com)$/.test(s);
 }
 function acquisition(){
   const q=new URLSearchParams(location.search),ref=referrerHost();
