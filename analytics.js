@@ -35,6 +35,8 @@ function classify(){
   if(path==="/"||/\/index\.html$/.test(path)){type="home";}
   else if((m=path.match(/\/cases\/([^/]+)\.html$/))){type="case";entityType="case";try{entity=decodeURIComponent(m[1])}catch{entity=m[1]}}
   else if((m=path.match(/\/people\/([^/]+)\.html$/))){type="person";entityType="person";try{entity=decodeURIComponent(m[1])}catch{entity=m[1]}}
+  else if(/\/special\/(?:index\.html)?$/.test(path)){type="special_index";entityType="special";entity="index";}
+  else if((m=path.match(/\/special\/([^/]+)\.html$/))){type="special";entityType="special";try{entity=decodeURIComponent(m[1])}catch{entity=m[1]}}
   else if(/\/case\.html$/.test(path)){type="interactive_case";entityType="case";const q=new URLSearchParams(location.search);entity=q.get("slug")||q.get("id")}
   else if(/\/person\.html$/.test(path)){type="interactive_person";entityType="person";const q=new URLSearchParams(location.search);entity=q.get("id")||q.get("mention")}
   else if(/\/(all-cases|latest|criminal|civil|administrative|acquittals|sentencing|people|topics|courts|years)\.html$/.test(path)){type="archive";entity=RegExp.$1}
@@ -45,10 +47,14 @@ function referrerHost(){
   if(!document.referrer)return "direct";
   try{const u=new URL(document.referrer);if(u.hostname===location.hostname)return "internal";return u.hostname.replace(/^www\./,"").toLowerCase().slice(0,200)||"direct"}catch{return "direct"}
 }
+function isAiSource(v){
+  const s=String(v||"").trim().toLowerCase();
+  return s==="openai"||s==="chatgpt"||/(^|\.)(chatgpt\.com|openai\.com|copilot\.com|perplexity\.ai|claude\.ai|gemini\.google\.com)$/.test(s);
+}
 function acquisition(){
   const q=new URLSearchParams(location.search),ref=referrerHost();
   const source=token(q.get("utm_source"),80)||(ref==="direct"||ref==="internal"?ref:token(ref,80));
-  const medium=token(q.get("utm_medium"),80)||(ref==="direct"?"none":ref==="internal"?"internal":"referral");
+  const medium=token(q.get("utm_medium"),80)||((isAiSource(source)||isAiSource(ref))?"ai_search":ref==="direct"?"none":ref==="internal"?"internal":"referral");
   const campaign=token(q.get("utm_campaign"),100);
   return {ref,source,medium,campaign};
 }
@@ -102,6 +108,7 @@ function pageView(){
   if(page.type==="home")trackOnce("home_view","home");
   else if(page.type==="case"||page.type==="interactive_case")trackOnce("case_view",page.type);
   else if(page.type==="person"||page.type==="interactive_person")trackOnce("person_view",page.type);
+  else if(page.type==="special"||page.type==="special_index")trackOnce("special_view",page.entity||"special");
   else if(page.type==="archive"){
     if(page.entity==="people")trackOnce("person_list_view","archive");
     else trackOnce("case_list_view",page.entity||"archive");
