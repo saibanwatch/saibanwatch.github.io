@@ -31,6 +31,7 @@ jobs:
           for i in $(seq 1 30); do
             gender=$(curl -fsSL "$SITE/special/justice-gender-gap.html" || true)
             consent=$(curl -fsSL "$SITE/special/nonconsensual-intercourse.html" || true)
+            immigration=$(curl -fsSL "$SITE/special/immigration-crime.html" || true)
             home=$(curl -fsSL "$SITE/" || true)
             debates=$(curl -fsSL "$SITE/debates.html" || true)
             sitemap=$(curl -fsSL "$SITE/sitemaps/static.xml" || true)
@@ -38,9 +39,13 @@ jobs:
             if grep -Fq '司法の「女割」はある' <<< "$gender" \
               && grep -Fq '不同意性交等罪は広すぎる？' <<< "$consent" \
               && grep -Fq 'const TOPIC="nonconsensual-intercourse";' <<< "$consent" \
+              && grep -Fq '移民・外国人による犯罪は増えている？' <<< "$immigration" \
+              && grep -Fq 'const TOPIC="immigration-crime";' <<< "$immigration" \
               && grep -Fq 'special/nonconsensual-intercourse.html' <<< "$home" \
               && grep -Fq 'special/nonconsensual-intercourse.html' <<< "$debates" \
-              && grep -Fq 'special/nonconsensual-intercourse.html' <<< "$sitemap"; then
+              && grep -Fq 'special/nonconsensual-intercourse.html' <<< "$sitemap" \
+              && grep -Fq 'special/immigration-crime.html' <<< "$home" \
+              && grep -Fq 'special/immigration-crime.html' <<< "$sitemap"; then
               ok=1
               break
             fi
