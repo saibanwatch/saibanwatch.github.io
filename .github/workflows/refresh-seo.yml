@@ -15,7 +15,7 @@ on:
       - "seo.css"
       - "21d6e780c8c007515162b511ae98a991668a603d437c5119.txt"
   schedule:
-    - cron: "17 * * * *"
+    - cron: "17,47 * * * *"
   workflow_dispatch:
 permissions:
   contents: write
