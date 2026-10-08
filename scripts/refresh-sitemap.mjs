@@ -32,6 +32,26 @@ const [
   fetchAll("person_sources","select=person_id,url,publisher,title,source_type,is_primary,created_at&order=is_primary.desc")
 ]);
 
+// Do not replace the published static pages when a data-source outage or
+// unexpectedly empty public response would produce a blank site.
+if (cases.length === 0) {
+  throw new Error("Supabase returned zero public cases; keeping existing SEO pages");
+}
+const seenCaseSlugs = new Set();
+for (const c of cases) {
+  if (!c.slug || seenCaseSlugs.has(c.slug)) {
+    throw new Error("Missing or repeated case slug in SEO feed: " + String(c.slug));
+  }
+  seenCaseSlugs.add(c.slug);
+}
+console.log(
+  "SEO source snapshot:",
+  cases.length, "cases,",
+  summaries.length, "published summaries,",
+  caseSources.length, "case sources,",
+  people.length, "verified people"
+);
+
 const h=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 const xml=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");
 const txt=(s,n=1000)=>String(s??"").replace(/\s+/g," ").trim().slice(0,n);
