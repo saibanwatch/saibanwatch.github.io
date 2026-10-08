@@ -37,6 +37,9 @@ const [
 if (cases.length === 0) {
   throw new Error("Supabase returned zero public cases; keeping existing SEO pages");
 }
+if (summaries.length === 0 || caseSources.length === 0) {
+  throw new Error("Supabase returned no published case summaries or court sources; keeping existing SEO pages");
+}
 const seenCaseSlugs = new Set();
 for (const c of cases) {
   if (!c.slug || seenCaseSlugs.has(c.slug)) {
