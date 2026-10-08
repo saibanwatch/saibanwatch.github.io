@@ -1630,7 +1630,7 @@ https://saibanwatch.github.io/cases/official-sc-2026-gyotsu-62-20261007.html
 https://saibanwatch.github.io/cases/official-sc-2026-gyotsu-66-20261007.html
 https://saibanwatch.github.io/cases/official-tokyo-2025-gowa-192-20260911.html
 https://saibanwatch.github.io/cases/official-tokyo-2025-gowa-368-20260925.html
-https://saibanwatch.github.io/cases/official-tokyo-jury-2023-gowa197-20261130.html
+https://saibanwatch.github.io/cases/official-tokyo-jury-2023-gowa197-20261214.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa119-20261009.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa177-20261016.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa197-20261016.html
@@ -1638,7 +1638,7 @@ https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa231-20261015.ht
 https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa257-20261029.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa318-20261117.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa359-20261201.html
-https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa388-20261120.html
+https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa388-20261110.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2025-gowa409-20261023.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2026-wa12-20261021.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2026-wa185-20261118.html
