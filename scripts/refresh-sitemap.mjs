@@ -310,6 +310,10 @@ function personPage(p){
 }
 
 for(const c of cases) fs.writeFileSync("cases/"+c.slug+".html",casePage(c));
+const writtenCasePages = fs.readdirSync("cases").filter(file => file.endsWith(".html")).length;
+if (writtenCasePages !== cases.length) {
+  throw new Error("SEO case-page count mismatch: " + writtenCasePages + " files / " + cases.length + " records");
+}
 for(const p of people) fs.writeFileSync("people/"+p.id+".html",personPage(p));
 
 function peopleIndex(){
