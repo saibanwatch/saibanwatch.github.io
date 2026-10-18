@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import {createHash} from "node:crypto";
+// Include source-verified news verdicts and pending hearings in the normal SEO refresh.
 
 const index=fs.readFileSync("index.html","utf8");
 const urlMatch=index.match(/SUPABASE_URL="([^"]+)"/)||index.match(/createClient\("([^"]+)"/);
