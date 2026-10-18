@@ -1668,8 +1668,15 @@ https://saibanwatch.github.io/cases/official-tokyo-jury-2026-wa185-20261118.html
 https://saibanwatch.github.io/cases/official-tokyo-jury-2026-wa56-20261113.html
 https://saibanwatch.github.io/cases/reported-2019-takamatsu-boy-sexual-assault.html
 https://saibanwatch.github.io/cases/reported-2025-kusatsu-arai-false-accusation.html
+https://saibanwatch.github.io/cases/reported-2026-chiba-metropolitan-robbery-fujii-kubota.html
+https://saibanwatch.github.io/cases/reported-2026-dewi-sukarno-assault-judgment.html
+https://saibanwatch.github.io/cases/reported-2026-hiroshima-ihara-indecent-assault.html
+https://saibanwatch.github.io/cases/reported-2026-kochi-nagahama-pool-teacher.html
+https://saibanwatch.github.io/cases/reported-2026-matsuki-nidec-insider-tob.html
+https://saibanwatch.github.io/cases/reported-2026-yokohama-mishima-indecent-assault-hearing.html
 https://saibanwatch.github.io/people.html
 https://saibanwatch.github.io/people/ece652b2-a652-4aaf-9a9c-30cc3b813295.html
+https://saibanwatch.github.io/people/57f3cfee-bffa-4aca-895d-a3ed152e27ed.html
 https://saibanwatch.github.io/people/0dd12f90-44b9-48b4-b27e-d065f32bc60a.html
 https://saibanwatch.github.io/people/f7f0802e-2c53-4c3f-8f12-b7922cba2c43.html
 https://saibanwatch.github.io/people/eb570fc2-a782-47dc-8e4e-1bc707f2a4c1.html
@@ -1773,8 +1780,8 @@ https://saibanwatch.github.io/people/f4507b95-6e40-4e7b-acb8-318f7f28b5f2.html
 https://saibanwatch.github.io/people/382c7acf-b92c-4a39-8168-de47a3abed5e.html
 https://saibanwatch.github.io/people/42e8845f-58d7-4cf5-bc11-8e58c4e1c2d8.html
 https://saibanwatch.github.io/people/f379466d-8a58-43d8-b2d5-e1bd9ce01ba6.html
-https://saibanwatch.github.io/people/99dc7f74-1d17-42f8-80a7-4684b4443b62.html
 https://saibanwatch.github.io/people/f0eb644d-e1bf-4bfc-afa3-10f4e0d2d43e.html
+https://saibanwatch.github.io/people/99dc7f74-1d17-42f8-80a7-4684b4443b62.html
 https://saibanwatch.github.io/people/a2bc0503-d3f6-451f-a36b-8ad059875562.html
 https://saibanwatch.github.io/people/a730e0ad-b040-4f9c-84aa-458342536c4d.html
 https://saibanwatch.github.io/people/8507cca4-0e10-4460-b4ec-5a476d5dfd79.html
@@ -1800,6 +1807,7 @@ https://saibanwatch.github.io/people/dc34621a-ca56-4980-8dd1-93c9e569dc55.html
 https://saibanwatch.github.io/people/611b7300-d4a7-44e8-8e15-d1fae24bca6c.html
 https://saibanwatch.github.io/people/2168dfe0-b765-407b-a151-134328efbd99.html
 https://saibanwatch.github.io/people/df3ee1b1-9c34-413e-a7dd-f2e2e7714c04.html
+https://saibanwatch.github.io/people/8146c484-31d5-462a-9703-9c6464092fb4.html
 https://saibanwatch.github.io/people/aab2a7a0-51b9-4b22-aeb4-faafc1f99927.html
 https://saibanwatch.github.io/people/d0239494-949c-4879-afa1-4ed41f0cbbf8.html
 https://saibanwatch.github.io/people/24d25b51-3e1d-450f-8dd8-1927b3643465.html
@@ -1818,8 +1826,8 @@ https://saibanwatch.github.io/people/e4617913-594b-4024-ac4d-26602baad12a.html
 https://saibanwatch.github.io/people/69d0de18-9af8-4062-ba84-e071d91ae357.html
 https://saibanwatch.github.io/people/bf96b777-1e16-4bcb-9877-aad8771282c7.html
 https://saibanwatch.github.io/people/18a39a5c-7bf3-45d8-a2e1-1a8e3f5b13d7.html
-https://saibanwatch.github.io/people/0cc65aea-84a4-4aa0-bc56-ebc40df1a36b.html
 https://saibanwatch.github.io/people/f240972d-abdf-4741-93f7-edd528ff805a.html
+https://saibanwatch.github.io/people/0cc65aea-84a4-4aa0-bc56-ebc40df1a36b.html
 https://saibanwatch.github.io/people/6380d6f7-3a86-43f1-a0d6-25ca95235aca.html
 https://saibanwatch.github.io/people/1e405baa-6643-4b59-a153-131aef962551.html
 https://saibanwatch.github.io/people/4442244b-6bdb-4050-b644-aebc4c5d1a36.html
@@ -1829,8 +1837,8 @@ https://saibanwatch.github.io/people/e457fd1b-58be-4d60-92dd-8fe875f64720.html
 https://saibanwatch.github.io/people/0964b55a-fd96-4955-aef2-f9300044a748.html
 https://saibanwatch.github.io/people/9e2dbad8-3614-4961-afbe-e83e30ac78a3.html
 https://saibanwatch.github.io/people/8a58d4a3-8091-41a8-8c26-987fde259251.html
-https://saibanwatch.github.io/people/7d0923a3-f8c8-4f97-892e-30fb216494d6.html
 https://saibanwatch.github.io/people/a4b643e1-5284-4738-8b57-3f46dfdb208c.html
+https://saibanwatch.github.io/people/7d0923a3-f8c8-4f97-892e-30fb216494d6.html
 https://saibanwatch.github.io/people/ce2fec59-745a-4138-b5eb-344dc3c39d43.html
 https://saibanwatch.github.io/people/544bfb46-b85e-4e01-b848-532854424b99.html
 https://saibanwatch.github.io/people/a609e79f-5a39-43cc-b5e0-572738be5e6c.html
@@ -1842,6 +1850,7 @@ https://saibanwatch.github.io/people/c41cbd60-c0e9-49e6-95c3-1a2a8678fd72.html
 https://saibanwatch.github.io/people/6e136c50-ad69-430e-b62f-e8e0fc4cd751.html
 https://saibanwatch.github.io/people/c375f303-364f-4f9d-b4d1-8ae8e10fcb66.html
 https://saibanwatch.github.io/people/a2ca0556-d191-4f2e-9dec-df0d61d15dbb.html
+https://saibanwatch.github.io/people/2313957b-2e91-4d26-bf2b-cda92df6875b.html
 https://saibanwatch.github.io/people/2b5e2ca3-3e53-46c0-82c5-297ec94d1bbe.html
 https://saibanwatch.github.io/people/9bfb41a1-22b5-4dc6-ad58-2aaa093ed15c.html
 https://saibanwatch.github.io/people/423300d4-4363-4d65-ae18-f8c8bfb5a529.html
@@ -1887,6 +1896,7 @@ https://saibanwatch.github.io/people/4328d458-ff0b-4bb4-97d9-5d64379f1c66.html
 https://saibanwatch.github.io/people/31b00f40-b85a-45d8-8959-b5118bef5237.html
 https://saibanwatch.github.io/people/c9f03c9d-7d0f-47b7-9df8-4691ba6d2348.html
 https://saibanwatch.github.io/people/201b60c0-f85f-41a0-bb59-5f2b5d64d68e.html
+https://saibanwatch.github.io/people/88025478-4ca1-4f50-8f35-c32dc73a494b.html
 https://saibanwatch.github.io/people/5bb654bb-6760-4e2a-a3b5-268e3bb14a3d.html
 https://saibanwatch.github.io/people/e8a3568e-9785-48e6-9462-d4cb56be7552.html
 https://saibanwatch.github.io/people/99d9e81b-e07f-4dc7-b452-53d0d4e40978.html
@@ -1932,6 +1942,7 @@ https://saibanwatch.github.io/people/d2ac4486-9b16-4468-8291-2be0ec5061c4.html
 https://saibanwatch.github.io/people/26cdd322-3b11-482d-900c-eca36155778f.html
 https://saibanwatch.github.io/people/357f2616-1429-45ad-b0a2-41e1a9a0d3f3.html
 https://saibanwatch.github.io/people/805ed014-d3da-4dbe-91b3-7eba07be0e68.html
+https://saibanwatch.github.io/people/644bfd42-d25b-4f03-a1b8-2fd568174a35.html
 https://saibanwatch.github.io/people/3c422e95-d2c5-4148-89d7-96b9e6fec9e9.html
 https://saibanwatch.github.io/people/cf6f473f-7c03-4b7c-b182-44596e56f59c.html
 https://saibanwatch.github.io/people/f80c3e4c-f637-4233-9983-59db3241d2be.html
@@ -2138,9 +2149,9 @@ https://saibanwatch.github.io/people/465204f0-3f15-4ff9-8e24-332e162e1809.html
 https://saibanwatch.github.io/people/0e24efb5-efe5-4634-a07d-65a0a1a4a83e.html
 https://saibanwatch.github.io/people/f285855b-6f35-42b3-a648-e6770dd741d9.html
 https://saibanwatch.github.io/people/941c9719-d310-438f-b740-6b2a22ca64d2.html
+https://saibanwatch.github.io/people/6ff7ee13-0231-4a63-8e37-debc20b39ea1.html
 https://saibanwatch.github.io/people/2089329c-65c2-468d-8290-a16458f7c287.html
 https://saibanwatch.github.io/people/7f2bda2b-3139-4868-a5fa-a9b850a7cdac.html
-https://saibanwatch.github.io/people/6ff7ee13-0231-4a63-8e37-debc20b39ea1.html
 https://saibanwatch.github.io/people/65672c91-9908-49e3-ba68-7b4c63977088.html
 https://saibanwatch.github.io/people/6ba4fada-1b1e-4601-8b7b-47deb8744f6c.html
 https://saibanwatch.github.io/people/9fdd4860-3c15-4174-80e1-0ec0e084ec0c.html
@@ -2207,14 +2218,14 @@ https://saibanwatch.github.io/people/5aeadef0-0311-4bac-9f7b-64e7c8785e60.html
 https://saibanwatch.github.io/people/ba5bff1a-7d6a-47b3-8ebb-3f325d01f8d6.html
 https://saibanwatch.github.io/people/0e868c03-e714-430f-b471-a7d15ffdc764.html
 https://saibanwatch.github.io/people/5e852db0-34da-40d2-a90d-2eb86107f88d.html
-https://saibanwatch.github.io/people/144d1524-ab93-4706-a0e7-1fc08a6a7a44.html
 https://saibanwatch.github.io/people/016fd594-183c-49ec-9703-f3b22f288935.html
+https://saibanwatch.github.io/people/144d1524-ab93-4706-a0e7-1fc08a6a7a44.html
 https://saibanwatch.github.io/people/3a4c3b83-81ff-47a9-a226-33c89dfdbd00.html
 https://saibanwatch.github.io/people/b2a8e828-ecf3-489c-9771-44f45fe613a1.html
 https://saibanwatch.github.io/people/8b5245a0-c91b-4bc2-9cce-17c1fba2a41e.html
 https://saibanwatch.github.io/people/528ada19-01e7-461b-8a0b-da02891aeaca.html
-https://saibanwatch.github.io/people/1bcdd32e-ac3d-4e9d-af7e-98de8a5b106b.html
 https://saibanwatch.github.io/people/8ccca667-9707-4144-9024-2f2b5c5154b1.html
+https://saibanwatch.github.io/people/1bcdd32e-ac3d-4e9d-af7e-98de8a5b106b.html
 https://saibanwatch.github.io/people/cc2da16c-ab56-4bc4-9fff-487fbcfc8604.html
 https://saibanwatch.github.io/people/7e4cd312-aa23-4090-a534-3f560c4ad88c.html
 https://saibanwatch.github.io/people/b22861ee-f32f-45ff-b442-4e59da395f40.html
@@ -2240,6 +2251,7 @@ https://saibanwatch.github.io/people/283f45ad-c92b-4f2e-9513-d867a9cab612.html
 https://saibanwatch.github.io/people/a054662e-587b-4263-bbd9-e0cc6104f548.html
 https://saibanwatch.github.io/people/0d2f5fc8-3e27-4039-a833-2fded9687b5a.html
 https://saibanwatch.github.io/people/9be4d446-9905-4609-ab0e-5aa6d2d551c7.html
+https://saibanwatch.github.io/people/cea3c3fa-3571-46da-8b34-f361f8c991fa.html
 https://saibanwatch.github.io/people/d2604af9-2aac-40d8-a9be-45fcabfa9e49.html
 https://saibanwatch.github.io/people/4232e119-5153-42b6-8974-7401126d2550.html
 https://saibanwatch.github.io/people/9db8f218-5672-42c6-83ad-1f3890415e3f.html
@@ -2314,8 +2326,8 @@ https://saibanwatch.github.io/people/1c2e785a-b06b-46ef-a370-06df2010a411.html
 https://saibanwatch.github.io/people/e088b59c-09f1-406b-a69d-2e18ac229fe0.html
 https://saibanwatch.github.io/people/64a972dc-fbac-414a-8c49-63ae37ca9e59.html
 https://saibanwatch.github.io/people/ab160c74-968e-4165-b158-725ccf30461e.html
-https://saibanwatch.github.io/people/f8c0c738-e2cc-48e7-ae98-76524c900a3c.html
 https://saibanwatch.github.io/people/465ed78a-e002-408e-acaa-50b822a25ac8.html
+https://saibanwatch.github.io/people/f8c0c738-e2cc-48e7-ae98-76524c900a3c.html
 https://saibanwatch.github.io/people/48b569fb-8fbe-4249-9fc7-530fe97f7623.html
 https://saibanwatch.github.io/people/68d1c355-e675-426c-880d-92111f6dbb3c.html
 https://saibanwatch.github.io/people/c9833037-2e7b-4bcf-be4c-2bfafac04215.html
@@ -2361,9 +2373,9 @@ https://saibanwatch.github.io/people/a2825da6-963b-4cc3-9845-39f401ef907d.html
 https://saibanwatch.github.io/people/6bf514a9-61f6-4e88-ad41-69763a624377.html
 https://saibanwatch.github.io/people/f7893b6f-ce07-4cde-84c4-e03f059e7752.html
 https://saibanwatch.github.io/people/205396f5-b591-481c-8953-547fc1a24d49.html
-https://saibanwatch.github.io/people/42e66623-e5ff-407b-8cdd-d61fd5c6663d.html
 https://saibanwatch.github.io/people/a9d4ec3a-4905-4613-93b4-bd6f9cd299eb.html
 https://saibanwatch.github.io/people/e707005a-b06d-40c1-bdb5-30676e6c5fa1.html
+https://saibanwatch.github.io/people/42e66623-e5ff-407b-8cdd-d61fd5c6663d.html
 https://saibanwatch.github.io/people/f4117150-091d-4d46-b529-8b0fcbe54ba2.html
 https://saibanwatch.github.io/people/b93cf90c-8be3-467e-9e42-c1ca7df1d9da.html
 https://saibanwatch.github.io/people/d84c1dd2-ce27-4e6d-b031-d48f2dc97223.html
@@ -2660,6 +2672,7 @@ https://saibanwatch.github.io/people/d183fef0-5868-489f-a2be-ea23fb67478e.html
 https://saibanwatch.github.io/people/5c9ae8bd-e28e-4ae9-85c4-46d0261c314e.html
 https://saibanwatch.github.io/people/82ded660-ca38-4b38-9c74-a5585dcec99e.html
 https://saibanwatch.github.io/people/90304f1d-681d-47bb-86bb-3f8357221641.html
+https://saibanwatch.github.io/people/50aa4a17-8818-43d9-b51d-e3c1e15c3de5.html
 https://saibanwatch.github.io/people/ab15fcd5-b985-419a-bbe7-83cf696cf38f.html
 https://saibanwatch.github.io/people/36f37bb8-abd3-4170-b289-e85c39d8bff9.html
 https://saibanwatch.github.io/people/f197ecc8-eeec-4a30-b8ef-458e4f5226d1.html
@@ -2687,8 +2700,8 @@ https://saibanwatch.github.io/people/bce24fa5-a4d8-4109-8932-964a2ac9b019.html
 https://saibanwatch.github.io/people/b14933c9-7037-4c3b-9a47-b1ddf3d7443f.html
 https://saibanwatch.github.io/people/5c11cd98-14c7-460f-924d-54cade872fd7.html
 https://saibanwatch.github.io/people/8c0c1141-d6d8-429c-855b-4e8ece2cd979.html
-https://saibanwatch.github.io/people/88743931-9d99-46ea-bbfe-d1b50fb86722.html
 https://saibanwatch.github.io/people/c53b342f-fdf8-4e1d-ae13-34cb00f5e02a.html
+https://saibanwatch.github.io/people/88743931-9d99-46ea-bbfe-d1b50fb86722.html
 https://saibanwatch.github.io/people/9c51de23-ca6e-45e2-bcbd-d79b9ad25944.html
 https://saibanwatch.github.io/people/a20a56c9-d22a-45ec-8838-034f471ab654.html
 https://saibanwatch.github.io/people/346eb94e-e039-470b-af98-5529355423f5.html
@@ -2736,8 +2749,8 @@ https://saibanwatch.github.io/people/3206ad88-b016-4f6b-a0ef-06b666f2abc4.html
 https://saibanwatch.github.io/people/68f0e49d-da48-470b-8c2f-cbd2e65c6beb.html
 https://saibanwatch.github.io/people/3c22c606-0b99-4fce-90bc-742c0f85dd2e.html
 https://saibanwatch.github.io/people/85caf295-47a8-4997-913a-0d6ed00a2830.html
-https://saibanwatch.github.io/people/2890f6b9-468e-4c80-b782-4ff2496b98cf.html
 https://saibanwatch.github.io/people/dada5d4f-cfc3-42c8-ac5c-0422001104e4.html
+https://saibanwatch.github.io/people/2890f6b9-468e-4c80-b782-4ff2496b98cf.html
 https://saibanwatch.github.io/people/cda534b1-66b1-4eee-b594-dd3b33e3d2b2.html
 https://saibanwatch.github.io/people/54c5cbaa-3b72-4fd6-8d4c-c60650c92d09.html
 https://saibanwatch.github.io/people/73eff463-fa26-46a6-9486-5ea4c0e4d428.html
@@ -2769,8 +2782,8 @@ https://saibanwatch.github.io/people/cf883ab6-7cd3-4f59-a36c-208acc79c72d.html
 https://saibanwatch.github.io/people/af0cd1a9-29da-42fb-9c8a-f3a2ecb15e4e.html
 https://saibanwatch.github.io/people/ef04923f-bc65-4d80-b867-580d51834d29.html
 https://saibanwatch.github.io/people/33068a63-df90-4171-afe1-d9cfa0e22178.html
-https://saibanwatch.github.io/people/cdac4051-372e-4e4d-a7bc-c90b25ffadc5.html
 https://saibanwatch.github.io/people/c3d34e73-e425-41c2-9e5a-d941d2d04093.html
+https://saibanwatch.github.io/people/cdac4051-372e-4e4d-a7bc-c90b25ffadc5.html
 https://saibanwatch.github.io/people/4ee0b211-5f64-41b5-bde8-5c6abf40beaa.html
 https://saibanwatch.github.io/people/1463f341-1506-444c-b900-771ea1ce4ab4.html
 https://saibanwatch.github.io/people/cbf38e80-dd85-4dbe-8a83-4ab56ec43e06.html
@@ -2897,8 +2910,8 @@ https://saibanwatch.github.io/people/ba226c2c-1689-4c4e-9af4-31fa4c811102.html
 https://saibanwatch.github.io/people/7136a571-ef3d-4675-b4dd-a53bc82439d0.html
 https://saibanwatch.github.io/people/b6a37d5d-1693-49d6-b97c-4a4d93bc1958.html
 https://saibanwatch.github.io/people/5686b348-a6d3-4f96-ab56-a624a25dd688.html
-https://saibanwatch.github.io/people/c3061c1f-ae39-4ef4-b637-28d10c238dde.html
 https://saibanwatch.github.io/people/a028a607-8544-4437-a28a-16a3d21edb5c.html
+https://saibanwatch.github.io/people/c3061c1f-ae39-4ef4-b637-28d10c238dde.html
 https://saibanwatch.github.io/people/df7f08f8-f5ea-405e-b445-2c229d3bbce9.html
 https://saibanwatch.github.io/people/1c42f075-99f7-445d-851e-ab8e321ebece.html
 https://saibanwatch.github.io/people/e730eccb-e24a-43ad-859d-c603191747d4.html
@@ -3125,6 +3138,7 @@ https://saibanwatch.github.io/people/45e7eb3f-3dc8-4e54-bf43-9377cff977e5.html
 https://saibanwatch.github.io/people/1dea26fb-eebd-419e-937c-1af719590772.html
 https://saibanwatch.github.io/people/c3ed0702-4878-45db-96ef-56a098bdf440.html
 https://saibanwatch.github.io/people/bcd83ede-4f7b-4f82-8865-8ab6c77e588c.html
+https://saibanwatch.github.io/people/a2a622c9-04b8-4746-94fd-ca2a7b6ef8f8.html
 https://saibanwatch.github.io/people/a98c72bb-1a9e-4c61-ab2c-81b2444661fa.html
 https://saibanwatch.github.io/people/d801f38c-78ce-4a87-a52d-e658dbad08c0.html
 https://saibanwatch.github.io/people/b1592944-fea2-4d5c-9620-3bd186551526.html
@@ -3151,8 +3165,8 @@ https://saibanwatch.github.io/people/f0a069f0-b44a-42a0-8d94-dc5458c811ab.html
 https://saibanwatch.github.io/people/7db5c822-1eea-452f-8c1b-c44713453c47.html
 https://saibanwatch.github.io/people/d67d15c7-b80c-452e-a975-47e7f7860c3b.html
 https://saibanwatch.github.io/people/3f85dc25-8c97-4bcd-a79e-0fab10767243.html
-https://saibanwatch.github.io/people/0848371b-afaa-4304-9295-160fe1030efc.html
 https://saibanwatch.github.io/people/e440d7f7-db75-45b9-8c02-175e5eddabbe.html
+https://saibanwatch.github.io/people/0848371b-afaa-4304-9295-160fe1030efc.html
 https://saibanwatch.github.io/people/05aafcb1-9a2b-4891-9228-192189e5e93b.html
 https://saibanwatch.github.io/people/e34ba03e-5ce1-435e-bd94-dde3add2425e.html
 https://saibanwatch.github.io/people/0de64498-ba3b-46a4-8aa3-c493995700eb.html
@@ -3164,6 +3178,7 @@ https://saibanwatch.github.io/people/433c21f8-7f9c-4c82-ac04-a5ac5fd90098.html
 https://saibanwatch.github.io/people/504fe88f-97d1-491c-a1c7-1fcaf7e8e93a.html
 https://saibanwatch.github.io/people/7be3df94-128f-4be2-b9c5-bcd8b8d136d0.html
 https://saibanwatch.github.io/people/31412a08-89c7-46a4-acb0-4d02b878d409.html
+https://saibanwatch.github.io/people/7f77a1a1-65f8-405a-8d75-7c8d1ff5ece4.html
 https://saibanwatch.github.io/people/92778237-3fca-4fcf-8c9c-9b87206690bb.html
 https://saibanwatch.github.io/people/e3168954-5c84-4416-b726-358504c2c28a.html
 https://saibanwatch.github.io/people/7693a938-4a71-4a9b-b038-10448b1a6670.html
@@ -3212,8 +3227,9 @@ https://saibanwatch.github.io/people/beb2f3eb-6c51-4199-9706-43ff4172b92c.html
 https://saibanwatch.github.io/people/209b8ebd-00e3-4a2e-852c-ec742ef4103f.html
 https://saibanwatch.github.io/people/c9118c95-cb5b-457b-a2e8-9db78dd5693b.html
 https://saibanwatch.github.io/people/ab2d45f7-2b4c-4a11-ae2f-ccc785b3e287.html
-https://saibanwatch.github.io/people/f7e7bf1d-d156-4afc-8e6a-204a885f1418.html
 https://saibanwatch.github.io/people/67c9459f-8e90-4b22-9fd3-cc2a9fd5333d.html
+https://saibanwatch.github.io/people/f7e7bf1d-d156-4afc-8e6a-204a885f1418.html
+https://saibanwatch.github.io/people/ce03ca03-1f9d-42b6-8846-342b4c6dfc59.html
 https://saibanwatch.github.io/people/a2d618e7-a193-4e04-b603-76fa4a40db71.html
 https://saibanwatch.github.io/people/cc4f078c-062d-410d-bfbe-d4911ef643a0.html
 https://saibanwatch.github.io/people/9fb35b9b-e8b5-43b6-a9b0-8fb2a41e623e.html
@@ -3279,8 +3295,8 @@ https://saibanwatch.github.io/people/a259b836-9357-423a-8f6b-6a02f43d40e6.html
 https://saibanwatch.github.io/people/4af39991-6247-449e-b4f1-4a749627fca5.html
 https://saibanwatch.github.io/people/45f54677-b19b-4db9-8752-0298af0ba19a.html
 https://saibanwatch.github.io/people/a87e8de7-c79f-429c-87ea-7182baf986e2.html
-https://saibanwatch.github.io/people/69b9c97c-b021-41ac-b731-6b85f958ba2f.html
 https://saibanwatch.github.io/people/d88664ba-1a21-490e-bf49-62a089868a20.html
+https://saibanwatch.github.io/people/69b9c97c-b021-41ac-b731-6b85f958ba2f.html
 https://saibanwatch.github.io/people/f70f283a-6943-44e0-9f00-c274c062ca20.html
 https://saibanwatch.github.io/people/4b555235-01f7-4786-ad0c-657b7a3048aa.html
 https://saibanwatch.github.io/people/c6fb1334-67b6-47be-9ad4-5c15bae87da2.html
@@ -3309,8 +3325,8 @@ https://saibanwatch.github.io/people/5f82ce9e-cf4d-422e-82f0-50863a0f6130.html
 https://saibanwatch.github.io/people/d7c650de-8dca-4572-9662-31ec00ca47ec.html
 https://saibanwatch.github.io/people/9c1e42a3-8335-4467-a34b-ce18c6fba43a.html
 https://saibanwatch.github.io/people/411b097f-40ca-47d1-8e8b-6af859dc4186.html
-https://saibanwatch.github.io/people/de8fb0d8-bf1d-45eb-9bf6-40b2dc87903e.html
 https://saibanwatch.github.io/people/031c0cfd-9a08-4bbb-a820-c9b363ce3cba.html
+https://saibanwatch.github.io/people/de8fb0d8-bf1d-45eb-9bf6-40b2dc87903e.html
 https://saibanwatch.github.io/people/aca1c4a9-dd4e-4dff-9d06-f06aad4ee263.html
 https://saibanwatch.github.io/people/e56fd504-a751-42f0-b76e-b6684b6cf498.html
 https://saibanwatch.github.io/people/c37339d6-54a6-4863-8d46-96a9c3c1f33c.html
@@ -3341,6 +3357,7 @@ https://saibanwatch.github.io/people/221a32ad-114d-48e0-850e-d236957d8541.html
 https://saibanwatch.github.io/people/a77a4656-3774-43d4-8b77-78e093e567e8.html
 https://saibanwatch.github.io/people/1975cabd-bec2-4ce1-a135-a69e3687a371.html
 https://saibanwatch.github.io/people/61b38d4f-ca03-4989-99c6-7bafd72b2d5a.html
+https://saibanwatch.github.io/people/2fb5403b-2c70-4c7a-a634-fb76b4d25eb6.html
 https://saibanwatch.github.io/people/7be78e53-1824-475d-bbcc-efe8271f5da0.html
 https://saibanwatch.github.io/people/053cbf00-e143-4761-b60e-15158e65cb7b.html
 https://saibanwatch.github.io/people/c8f87b55-861b-40c5-933b-762773ad651f.html
@@ -3610,11 +3627,11 @@ https://saibanwatch.github.io/courts/court-5270b7efd735.html
 https://saibanwatch.github.io/courts/court-9fce4ff9ef44.html
 https://saibanwatch.github.io/courts/court-e6956ffe0f53.html
 https://saibanwatch.github.io/courts/court-280512bb8ebe.html
+https://saibanwatch.github.io/courts/court-3d797eea6f7c.html
 https://saibanwatch.github.io/courts/court-17b855e4a217.html
 https://saibanwatch.github.io/courts/court-6fc522c3aa73.html
 https://saibanwatch.github.io/courts/court-9cc46c4ea6f0.html
 https://saibanwatch.github.io/courts/court-1b6295dfc275.html
-https://saibanwatch.github.io/courts/court-3d797eea6f7c.html
 https://saibanwatch.github.io/courts/court-b9de17dc12e8.html
 https://saibanwatch.github.io/courts/court-4a6a04c65d51.html
 https://saibanwatch.github.io/courts/court-b7e0e058a009.html
