@@ -43,6 +43,7 @@ main{max-width:900px;margin:16px auto;padding:0 14px}
 .post:first-child{border-top:0}
 .who{font-size:11px;font-weight:700;color:#666}
 .post p{white-space:pre-wrap;margin:4px 0;font-size:13px}
+.judge-verdict,.judge-reason{margin:5px 0 0!important;font-size:13px;line-height:1.7}.judge-verdict{color:#333}.judge-reason{color:#555}
 .actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
 .btn{border:1px solid #bbb;background:#fff;border-radius:4px;padding:6px 9px;cursor:pointer;color:#444}
 .btn:hover{background:#f5f5f5}
@@ -91,7 +92,7 @@ footer{max-width:900px;margin:22px auto 0;padding:15px 14px 34px;color:#888;font
     <h2>経歴年表</h2>
     <div id="personTimeline"><div class="empty">読み込み中...</div></div>
   </section>
-  <section class="panel"><h2>主な掲載事件</h2><div id="cases"><div class="empty">読み込み中...</div></div></section>
+  <section class="panel"><h2 id="personCasesTitle">主な掲載事件</h2><div id="cases"><div class="empty">読み込み中...</div></div></section>
   <section class="panel" id="relatedPeoplePanel">
     <h2>同じ掲載事件に登場する人物</h2>
     <p class="small">同一の掲載事件に紐づく人物です。私的な関係や共犯関係などを意味するものではありません。</p>
@@ -135,12 +136,21 @@ const roleLabel=r=>({judge:"裁判官",prosecutor:"検察官",lawyer:"弁護士"
 let user=null,currentPerson=null,currentMention=null,currentTargetType=null,currentTargetId=null,authMode="login";
 const authDialog=document.getElementById("authDialog");
 
+function judgeVerdictMarkup(c,summary){
+  const result=String(c?.judgment_result||"").trim();
+  const reasoning=String(summary?.court_summary||"").replace(/\s+/g," ").trim();
+  const brief=s=>s.length>320?s.slice(0,320).replace(/[、。\s]+$/,"")+"…":s;
+  return (result?'<p class="judge-verdict"><b>判決・決定：</b>'+esc(result)+'</p>':"")+
+    (reasoning?'<p class="judge-reason"><b>裁判所の判断：</b>'+esc(brief(reasoning))+'</p>':"")+
+    (!result&&!reasoning?'<p class="small">判決・判断の要約は未登録です。</p>':"");
+}
+
 async function loadPerson(){
   const q=new URLSearchParams(location.search),mentionId=q.get("mention"),id=q.get("id");
 
   if(mentionId){
     const {data,error}=await sb.from("case_people_mentions")
-      .select("id,person_id,display_name,role,role_label,source_url,cases(id,slug,title,court,event_date,status)")
+      .select("id,person_id,display_name,role,role_label,source_url,cases(id,slug,title,court,event_date,status,judgment_result)")
       .eq("id",mentionId)
       .maybeSingle();
     if(error||!data){
@@ -170,8 +180,14 @@ async function loadPerson(){
       '<div class="profile-links"><a target="_blank" rel="noopener" href="'+esc(data.source_url)+'">判決文を開く</a></div>'+
       '</div></div>';
 
+    document.getElementById("personCasesTitle").textContent=data.role==="judge"?"担当した裁判と判決の要約":"主な掲載事件";
+    let mentionSummary=null;
+    if(data.role==="judge"&&cc.id){
+      const res=await sb.from("case_summaries").select("court_summary").eq("case_id",cc.id).eq("status","published").maybeSingle();
+      if(res.error)console.error(res.error);else mentionSummary=res.data;
+    }
     document.getElementById("cases").innerHTML=cc.id
-      ?'<div class="post"><div class="who">'+esc(data.role_label||"関係者")+'</div><p><b>'+esc(cc.title||"")+'</b><br><span class="small">'+esc(cc.court||"")+' · '+esc(fmt(cc.event_date))+'</span></p><a href="case.html?slug='+encodeURIComponent(cc.slug||"")+'">事件ページを開く</a></div>'
+      ?'<div class="post"><div class="who">'+esc(data.role_label||"関係者")+'</div><p><b>'+esc(cc.title||"")+'</b><br><span class="small">'+esc(cc.court||"")+' · '+esc(fmt(cc.event_date))+'</span></p>'+(data.role==="judge"?judgeVerdictMarkup(cc,mentionSummary):"")+'<a href="case.html?slug='+encodeURIComponent(cc.slug||"")+'">事件ページを開く</a></div>'
       :'<div class="small">掲載事件を取得できませんでした。</div>';
 
     document.getElementById("personDiscussionPanel").style.display="block";
@@ -192,6 +208,7 @@ async function loadPerson(){
   }
 
   currentPerson=data;
+  document.getElementById("personCasesTitle").textContent=data.role==="judge"?"担当した裁判と判決の要約":"主な掲載事件";
   currentMention=null;
   currentTargetType="person";
   currentTargetId=data.id;
@@ -300,7 +317,7 @@ async function loadRelatedPeople(rows){
 }
 
 async function loadCases(){
-  const {data,error}=await sb.from("case_people").select("case_id,role_label,cases(id,slug,title,court,event_date,status)").eq("person_id",currentPerson.id);
+  const {data,error}=await sb.from("case_people").select("case_id,role_label,cases(id,slug,title,court,event_date,status,judgment_result)").eq("person_id",currentPerson.id);
   const el=document.getElementById("cases");
   if(error||!data?.length){
     el.innerHTML='<div class="small">紐付け済み事件はありません。</div>';
@@ -309,7 +326,17 @@ async function loadCases(){
     return;
   }
   const rows=[...data].sort((a,b)=>String(b.cases?.event_date||"").localeCompare(String(a.cases?.event_date||"")));
-  const card=r=>{const c=r.cases||{},href=c.slug?'case.html?slug='+encodeURIComponent(c.slug):'case.html?id='+encodeURIComponent(c.id||"");return '<div class="post"><div class="who">'+esc(r.role_label||"関係者")+'</div><p><a href="'+href+'"><b>'+esc(c.title||"")+'</b></a><br><span class="small">'+esc(c.court||"")+' · '+esc(fmt(c.event_date))+'</span></p><a class="btn" href="'+href+'">事件ページを開く</a></div>'};
+  const isJudge=currentPerson.role==="judge";
+  const summaryMap=new Map();
+  if(isJudge){
+    const ids=[...new Set(rows.map(r=>r.cases?.id).filter(Boolean))];
+    for(let i=0;i<ids.length;i+=80){
+      const res=await sb.from("case_summaries").select("case_id,court_summary").in("case_id",ids.slice(i,i+80)).eq("status","published");
+      if(res.error){console.error(res.error);break;}
+      for(const summary of res.data||[])summaryMap.set(summary.case_id,summary);
+    }
+  }
+  const card=r=>{const c=r.cases||{},href=c.slug?'case.html?slug='+encodeURIComponent(c.slug):'case.html?id='+encodeURIComponent(c.id||"");return '<div class="post"><div class="who">'+esc(r.role_label||"関係者")+'</div><p><a href="'+href+'"><b>'+esc(c.title||"")+'</b></a><br><span class="small">'+esc(c.court||"")+' · '+esc(fmt(c.event_date))+'</span></p>'+(isJudge?judgeVerdictMarkup(c,summaryMap.get(c.id)):"")+'<a class="btn" href="'+href+'">事件ページを開く</a></div>'};
   const main=rows.slice(0,8),extra=rows.slice(8);
   el.innerHTML=main.map(card).join("")+(extra.length?'<details style="margin-top:10px"><summary>ほかの掲載事件 '+extra.length+'件を見る</summary>'+extra.map(card).join("")+'</details>':'');
   renderPersonTimeline(rows);
