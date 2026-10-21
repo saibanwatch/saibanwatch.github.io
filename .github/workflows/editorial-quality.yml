@@ -1,0 +1,30 @@
+name: Editorial quality gate
+on:
+  pull_request:
+    paths:
+      - "**/*.html"
+      - "scripts/**"
+      - "EDITORIAL_POLICY.md"
+      - ".github/workflows/editorial-quality.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "scripts/**"
+      - "EDITORIAL_POLICY.md"
+      - ".github/workflows/editorial-quality.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  editorial:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - name: Verify detection rules with regression examples
+        run: node scripts/check-editorial-copy.mjs --self-test
+      - name: Audit all pages before approving changes
+        run: node scripts/check-editorial-copy.mjs
