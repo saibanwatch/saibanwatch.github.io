@@ -32,7 +32,7 @@ const regressionSample = "ここでは確認できる宿直の男女区分を先
 if (!metaPatterns.some(({re}) => { re.lastIndex = 0; return re.test(regressionSample); })) {
   throw new Error("Editorial checker failed its regression example");
 }
-const editedPages = /(?:^|\\/)(?:special\\/[^/]+|index|gender-sentencing|statistics|debates|guides|topics|sentencing)\\.html$/;
+const editedPages = /(?:^|\/)(?:special\/[^/]+|index|gender-sentencing|statistics|debates|guides|topics|sentencing)\.html$/;
 
 function htmlFiles(dir) {
   if (!fs.existsSync(dir)) return [];
@@ -56,9 +56,9 @@ for (const file of files) {
   for (const phrase of banned) {
     if (content.includes(phrase)) findings.push({file,phrase});
   }
-  if (editedPages.test(file.replaceAll("\\\\", "/"))) {
-    const prose = content.replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/gi, "")
-      .replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/gi, "");
+  if (editedPages.test(file.replaceAll("\\", "/"))) {
+    const prose = content.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "");
     for (const {label,re} of metaPatterns) {
       re.lastIndex = 0;
       for (const hit of prose.matchAll(re)) {
