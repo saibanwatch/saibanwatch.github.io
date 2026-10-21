@@ -88,6 +88,11 @@ footer{max-width:900px;margin:22px auto 0;padding:15px 14px 34px;color:#888;font
 <header><div class="nav"><a class="brand" href="index.html">裁判ウォッチ</a><div class="spacer"></div><a class="btn" id="accountLink" href="account.html" style="display:none">アカウント</a><button class="btn" id="authBtn">ログイン</button></div></header>
 <main>
   <section id="casePanel" class="panel"><div class="empty">事件情報を読み込み中...</div></section>
+  <section class="panel" id="genderGapRelatedCase" hidden>
+    <h2>関連特集：司法の「女割」はある？</h2>
+    <p>この事件の判決を、起訴や量刑の男女差をめぐる議論とあわせて見ることができます。個別事件だけで男女差の有無は判断できません。</p>
+    <p><a href="special/justice-gender-gap.html">「女割」特設ページを見る</a></p>
+  </section>
   <section class="panel" id="caseTagsPanel">
     <h2>ユーザータグ</h2><div id="caseTags"><div class="small">読み込み中...</div></div>
     <div class="tag-add"><input id="caseTagInput" maxlength="24" placeholder="タグを追加（24文字以内）"><button class="btn" id="caseTagAddBtn" type="button">追加</button></div>
@@ -210,6 +215,7 @@ async function loadCase(){
   const {data,error}=await req.maybeSingle();
   if(error||!data){document.getElementById("casePanel").innerHTML='<div class="empty">事件が見つかりません。</div>';return}
   currentCase=data;
+  document.getElementById("genderGapRelatedCase").hidden = data.slug !== "reported-2025-kusatsu-arai-false-accusation";
   const {data:caseSummary,error:caseSummaryError}=await sb.from("case_summaries")
     .select("side_a_summary,side_b_summary,court_summary,side_a_label,side_b_label,source_url")
     .eq("case_id",data.id)
