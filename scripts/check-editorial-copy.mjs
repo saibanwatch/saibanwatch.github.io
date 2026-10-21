@@ -17,7 +17,22 @@ const banned = [
   "国籍だけで個人の犯罪可能性を判断することはできません",
   "性別そのものの効果を示すものではありません",
   "要約は原資料の代替ではありません。重要な内容はリンク先の原資料で確認してください",
+  "ここでは確認できる宿直の男女区分を先に掲載します",
+  "宿直以外の担当業務の配分については、職種・部署別の割当記録や規程を個別に調べる必要があります",
+  "この一件だけで「女性だから不起訴になった」とは判断できません",
 ];
+
+// 本文の事実ではなく、記事作成・調査の進め方を読者に説明する定型文。
+const metaPatterns = [
+  { label: "記事作成についての自己説明", re: /ここでは[^。\n<>]{0,140}(?:掲載|紹介|検証|整理|確認|取り上げ)(?:します|しています|していきます)/g },
+  { label: "調査作業を読者に予告する文章", re: /ここでは[^。\n<>]{0,140}(?:先に掲載します|今後調べていきます)/g },
+  { label: "根拠に代わる汎用的な留保", re: /この一件だけで[^。\n<>]{0,120}(?:判断|断定)できません/g },
+];
+const regressionSample = "ここでは確認できる宿直の男女区分を先に掲載します。";
+if (!metaPatterns.some(({re}) => { re.lastIndex = 0; return re.test(regressionSample); })) {
+  throw new Error("Editorial checker failed its regression example");
+}
+const editedPages = /(?:^|\\/)(?:special\\/[^/]+|index|gender-sentencing|statistics|debates|guides|topics|sentencing)\\.html$/;
 
 function htmlFiles(dir) {
   if (!fs.existsSync(dir)) return [];
@@ -40,6 +55,16 @@ for (const file of files) {
   const content = fs.readFileSync(file, "utf8");
   for (const phrase of banned) {
     if (content.includes(phrase)) findings.push({file,phrase});
+  }
+  if (editedPages.test(file.replaceAll("\\\\", "/"))) {
+    const prose = content.replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/gi, "")
+      .replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/gi, "");
+    for (const {label,re} of metaPatterns) {
+      re.lastIndex = 0;
+      for (const hit of prose.matchAll(re)) {
+        findings.push({file,phrase: label + ": " + hit[0]});
+      }
+    }
   }
 }
 if (findings.length) {
