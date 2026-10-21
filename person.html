@@ -34,6 +34,9 @@ main{max-width:900px;margin:16px auto;padding:0 14px}
 .person-opinion-btn:hover{background:#f7f7f7}
 .person-opinion-btn.selected{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-dark)}
 .person-opinion-count{display:block;font-size:11px;font-weight:400;color:#888;margin-top:2px}
+.person-opinion-in-profile{margin:12px 0;border:1px solid #e6e6e6;border-radius:5px;padding:10px;background:#fafafa}
+.person-opinion-in-profile h2{font-size:13px;margin:0 0 7px;padding:0;border:0}
+.person-opinion-in-profile .person-opinion-btn{padding:9px 8px}
 .unverified-note{margin-top:10px;padding:9px 10px;border:1px solid #e6c9b7;background:#fff7f1;border-radius:4px;color:#7a523d;font-size:12px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .box{background:#fafafa;border:1px solid #e3e3e3;border-radius:4px;padding:10px}
@@ -233,6 +236,7 @@ async function loadPerson(){
     '<div class="meta"><span>'+esc(roleLabel(data.role))+'</span><span>確認済み</span></div>'+
     '<h1 class="title">'+esc(data.display_name)+'</h1>'+
     '<p>'+esc(data.organization||"所属情報未掲載")+'</p>'+
+    (data.role==="judge"?'<div id="personOpinionMount"></div>':"")+
     '<div class="grid"><div class="box"><h3>生年月日</h3><div>'+esc(birth)+'</div></div><div class="box"><h3>性別</h3><div>'+esc(sex)+'</div></div><div class="box"><h3>出身地</h3><div>'+esc(birthplace)+'</div></div></div>'+
     '<h2 style="font-size:15px;margin:13px 0 6px">概要</h2><p class="summary">'+esc(overview)+'</p>'+
     '<h2 style="font-size:15px;margin:13px 0 6px">経歴・生い立ち</h2><p class="summary">'+esc(background)+'</p>'+
@@ -240,6 +244,11 @@ async function loadPerson(){
     (data.profile_url?'<a target="_blank" rel="noopener" href="'+esc(data.profile_url)+'">公式プロフィール</a>':'')+
     '</div><div id="verifiedPersonSources" class="small" style="margin-top:8px">確認資料を読み込み中...</div></div></div>';
 
+  if(data.role==="judge"){
+    const mount=document.getElementById("personOpinionMount");
+    const panel=document.getElementById("personOpinionPanel");
+    if(mount&&panel){panel.classList.add("person-opinion-in-profile");mount.appendChild(panel);}
+  }
   await Promise.all([loadCases(),loadPosts(),loadPersonOpinion(),loadVerifiedPersonSources(),loadPersonTags()]);
 }
 
