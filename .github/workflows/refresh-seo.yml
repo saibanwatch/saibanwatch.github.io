@@ -5,6 +5,7 @@ on:
     paths:
       - ".github/workflows/refresh-seo.yml"
       - "scripts/refresh-sitemap.mjs"
+      - "scripts/check-editorial-copy.mjs"
       - "scripts/submit-indexnow.mjs"
       - "**/*.html"
       - "robots.txt"
@@ -32,6 +33,8 @@ jobs:
           node-version: "24"
       - name: Rebuild search pages and sitemaps
         run: node scripts/refresh-sitemap.mjs
+      - name: Check editorial copy
+        run: node scripts/check-editorial-copy.mjs
       - name: Detect SEO changes
         id: changes
         shell: bash
