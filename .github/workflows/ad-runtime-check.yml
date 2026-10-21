@@ -1,0 +1,23 @@
+name: Ad runtime checks
+on:
+  push:
+    paths:
+      - "ad-loader.js"
+      - "analytics.js"
+      - ".github/workflows/ad-runtime-check.yml"
+  pull_request:
+    paths:
+      - "ad-loader.js"
+      - "analytics.js"
+      - ".github/workflows/ad-runtime-check.yml"
+permissions:
+  contents: read
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check shared JavaScript syntax
+        run: |
+          node --check ad-loader.js
+          node --check analytics.js
