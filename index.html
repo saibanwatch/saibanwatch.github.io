@@ -457,9 +457,11 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .home-specials-status{font-size:10px;color:#999}
 .home-specials-all{display:inline-flex;align-items:center;gap:5px;border:1px solid #c9c9c9;border-radius:4px;background:#fff;padding:5px 9px;color:#4f6578;font-size:11px;font-weight:800;line-height:1.2}
 .home-specials-all:hover{border-color:#999;background:#f7f7f7;text-decoration:none}
-.home-special-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.home-special-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .home-special-card{padding:13px 14px 12px;min-width:0}
 .home-special-card+.home-special-card{border-left:1px solid var(--line2)}
+.home-special-card:nth-child(odd){border-left:0}
+.home-special-card:nth-child(n+3){border-top:1px solid var(--line2)}
 .home-special-kicker{margin-bottom:3px;font-size:10px;font-weight:700;color:#8a5a50}
 .home-special-card h3{margin:0 0 5px;font-size:17px;line-height:1.45;letter-spacing:-.01em}
 .home-special-card h3 a:hover{text-decoration:underline}
@@ -568,6 +570,13 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
             <p>起訴猶予率・量刑の男女差と、JR横浜駅の痴漢冤罪騒動での不起訴事例を紹介。投票・投稿もできます。</p>
             <div class="home-special-meta">公式統計・量刑データ・不起訴の事例・2問投票</div>
             <a class="home-special-link" data-campaign-cta="home_gender_special_text" href="special/justice-gender-gap.html">特設を見る <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="home-special-card">
+            <div class="home-special-kicker">司法への不信と裁判官の評価</div>
+            <h3><a data-campaign-cta="home_judge_review_special" href="special/judge-review.html">裁判官を誰が審査する？</a></h3>
+            <p>判決への不満、人事評価・弾劾・海外の信任選挙。司法の男女差への批判も含め、制度のあり方を投票で議論。</p>
+            <div class="home-special-meta">国内外の制度・裁判官・2問投票</div>
+            <a class="home-special-link" data-campaign-cta="home_judge_review_special_text" href="special/judge-review.html">特設を見る <span aria-hidden="true">→</span></a>
           </article>
           <article class="home-special-card">
             <div class="home-special-kicker">移民・外国人犯罪と治安</div>
