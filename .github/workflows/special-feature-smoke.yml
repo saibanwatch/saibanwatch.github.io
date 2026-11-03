@@ -37,7 +37,7 @@ jobs:
             sitemap=$(curl -fsSL "$SITE/sitemaps/static.xml" || true)
 
             if grep -Fq '司法の「女割」はある' <<< "$gender" \
-              && grep -Fq '不同意性交等罪は広すぎる？' <<< "$consent" \
+              && grep -Fq '不同意性交等罪はおかしい？' <<< "$consent" \
               && grep -Fq 'const TOPIC="nonconsensual-intercourse";' <<< "$consent" \
               && grep -Fq '移民・外国人による犯罪は増えている？' <<< "$immigration" \
               && grep -Fq 'const TOPIC="immigration-crime";' <<< "$immigration" \
