@@ -233,6 +233,13 @@ function caseVotePrompt(c,req,jud){
 }
 
 function casePage(c){
+  // Earlier hearing notices remain accessible but do not compete with the final ruling in search.
+  const canonicalSlug=String(c.raw_metadata?.canonical_slug||"");
+  if(canonicalSlug && canonicalSlug!==c.slug && cases.some(x=>x.slug===canonicalSlug)){
+    const target="../cases/"+encodeURIComponent(canonicalSlug)+".html";
+    const canonical="https://saibanwatch.github.io/cases/"+encodeURIComponent(canonicalSlug)+".html";
+    return '<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex,follow"><link rel="canonical" href="'+h(canonical)+'"><meta http-equiv="refresh" content="0;url='+h(target)+'"><title>最新の判決ページ | 裁判ウォッチ</title></head><body><p><a href="'+h(target)+'">最高裁判決の本文を見る</a></p></body></html>';
+  }
   const url="https://saibanwatch.github.io/cases/"+encodeURIComponent(c.slug)+".html";
   const sum=txt(c.summary,1800), num=txt(c.raw_metadata?.case_number,120), aliases=caseAliases(c);
   const req=txt(c.sentencing_request||c.sentence_request,1200), jud=txt(c.judgment_result,1800);
@@ -571,7 +578,7 @@ const feedXml='<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:
 fs.writeFileSync("feed.xml",feedXml);
 
 function urlset(rows){return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+rows.map(r=>'  <url><loc>'+xml(r.loc)+'</loc>'+(r.lastmod?'<lastmod>'+r.lastmod+'</lastmod>':'')+'</url>').join('\n')+'\n</urlset>\n'}
-const caseMap=cases.map(c=>({loc:"https://saibanwatch.github.io/cases/"+encodeURIComponent(c.slug)+".html",lastmod:String(c.updated_at||"").slice(0,10)}));
+const caseMap=cases.filter(c=>!c.raw_metadata?.canonical_slug).map(c=>({loc:"https://saibanwatch.github.io/cases/"+encodeURIComponent(c.slug)+".html",lastmod:String(c.updated_at||"").slice(0,10)}));
 const peopleMap=[{loc:"https://saibanwatch.github.io/people.html"},...people.map(p=>({loc:"https://saibanwatch.github.io/people/"+encodeURIComponent(p.id)+".html",lastmod:String(p.created_at||"").slice(0,10)}))];
 const topicMap=[{loc:"https://saibanwatch.github.io/topics.html"},...topicRows.map(t=>({loc:"https://saibanwatch.github.io/topics/"+t.slug+".html"}))];
 const courtMap=[{loc:"https://saibanwatch.github.io/courts.html"},...courtDefs.map(d=>({loc:"https://saibanwatch.github.io/courts/"+d.slug+".html"}))];
