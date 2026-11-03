@@ -611,3 +611,5 @@ console.log("Generated",cases.length,"case pages,",people.length,"person pages,"
 // claim-refresh-trigger: 2026-09-22-editorial-batch-30-retry
 
 // crawl-navigation-refresh: 2026-09-28
+
+// Rebuild after 2026-11-03 recheck of overdue Tokyo jury judgment notices.
