@@ -1646,6 +1646,13 @@ https://saibanwatch.github.io/cases/official-97207-detail7.html
 https://saibanwatch.github.io/cases/official-97208-detail2.html
 https://saibanwatch.github.io/cases/official-97209-detail2.html
 https://saibanwatch.github.io/cases/official-97215-detail4.html
+https://saibanwatch.github.io/cases/official-97224-detail4.html
+https://saibanwatch.github.io/cases/official-97225-detail2.html
+https://saibanwatch.github.io/cases/official-97227-detail2.html
+https://saibanwatch.github.io/cases/official-97229-detail4.html
+https://saibanwatch.github.io/cases/official-97241-detail4.html
+https://saibanwatch.github.io/cases/official-97247-detail4.html
+https://saibanwatch.github.io/cases/official-97251-detail2.html
 https://saibanwatch.github.io/cases/official-ip-2025-gyoke-10088-20260909.html
 https://saibanwatch.github.io/cases/official-sc-2024-gyotsu-193-gyohi-230-20261014.html
 https://saibanwatch.github.io/cases/official-sc-2024-ju-2078-20261009.html
@@ -3628,8 +3635,8 @@ https://saibanwatch.github.io/courts/court-6dc518c0f0a4.html
 https://saibanwatch.github.io/courts/court-4a69ce9f2b43.html
 https://saibanwatch.github.io/courts/court-63a3d339d232.html
 https://saibanwatch.github.io/courts/court-6599644eb6f0.html
-https://saibanwatch.github.io/courts/court-76ccdd5e6b94.html
 https://saibanwatch.github.io/courts/court-9e4d790216bc.html
+https://saibanwatch.github.io/courts/court-76ccdd5e6b94.html
 https://saibanwatch.github.io/courts/court-f00fe9cb809b.html
 https://saibanwatch.github.io/courts/court-357e61a89f22.html
 https://saibanwatch.github.io/courts/court-c4f8adefdcf9.html
