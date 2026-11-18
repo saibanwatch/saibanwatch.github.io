@@ -1,0 +1,35 @@
+name: Import official Ito Yuko court portrait (one-time)
+on:
+  push:
+    paths:
+      - ".github/workflows/ito-yuko-photo-once.yml"
+permissions:
+  contents: write
+jobs:
+  crop-photo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v7
+      - name: Extract official 2015 portrait
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/people
+          curl --fail --location --retry 3 --max-time 35 "https://www.courts.go.jp/vc-files/courts/file5/interview-80.pdf" --output /tmp/court-interview-80.pdf
+          pdftoppm -f 4 -l 4 -r 150 -singlefile -png /tmp/court-interview-80.pdf /tmp/ito-portrait-page
+          python3 - <<'PY'
+          from PIL import Image
+          image = Image.open("/tmp/ito-portrait-page.png").convert("RGB")
+          width, height = image.size
+          # Page 5 (zero-based PDF page 3). Crop only Ito's labeled headshot.
+          left, top, right, bottom = 715/1024, 806/1447, 900/1024, 991/1447
+          photo = image.crop((round(width*left), round(height*top), round(width*right), round(height*bottom)))
+          photo.save("assets/people/ito-yuko-2015.jpg", format="JPEG", quality=90, optimize=True)
+          print(f"page={image.size}, portrait={photo.size}")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/people/ito-yuko-2015.jpg
+          git commit -m "Add Ito Yuko judge portrait from official court publication"
+          git push origin HEAD:main
