@@ -17,10 +17,14 @@ jobs:
           set -euo pipefail
           mkdir -p assets/people
           curl --fail --location --retry 3 --max-time 35 "https://www.courts.go.jp/vc-files/courts/file5/interview-80.pdf" --output /tmp/court-interview-80.pdf
-          pdftoppm -f 4 -l 4 -r 150 -singlefile -png /tmp/court-interview-80.pdf /tmp/ito-portrait-page
+          python3 -m pip install --quiet --disable-pip-version-check "pymupdf==1.26.6" "Pillow==11.3.0"
           python3 - <<'PY'
+          import pymupdf
           from PIL import Image
-          image = Image.open("/tmp/ito-portrait-page.png").convert("RGB")
+          doc = pymupdf.open("/tmp/court-interview-80.pdf")
+          image = Image.frombytes("RGB", [pix.width, pix.height], pix.samples) if False else None
+          pix = doc[3].get_pixmap(matrix=pymupdf.Matrix(2, 2), colorspace=pymupdf.csRGB, alpha=False)
+          image = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
           width, height = image.size
           # Page 5 (zero-based PDF page 3). Crop only Ito's labeled headshot.
           left, top, right, bottom = 715/1024, 806/1447, 900/1024, 991/1447
